@@ -15,17 +15,17 @@ motor frontRight = motor(PORT3, ratio18_1, true);
 motor rearRight = motor(PORT4, ratio18_1, true);
 controller Controller1 = controller(primary);
 /*vex-vision-config:begin*/
-signature Vision20__SIG_1 = signature (1, -2893, -2159, -2526, 8305, 12523, 10414, 3, 0);
-signature Vision20__SIG_2 = signature (2, 0, 0, 0, 0, 0, 0, 3, 0);
-signature Vision20__SIG_3 = signature (3, 0, 0, 0, 0, 0, 0, 3, 0);
-signature Vision20__SIG_4 = signature (4, 0, 0, 0, 0, 0, 0, 3, 0);
-signature Vision20__SIG_5 = signature (5, 0, 0, 0, 0, 0, 0, 3, 0);
-signature Vision20__SIG_6 = signature (6, 0, 0, 0, 0, 0, 0, 3, 0);
-signature Vision20__SIG_7 = signature (7, 0, 0, 0, 0, 0, 0, 3, 0);
+vision::signature Vision20__SIG_1 (1, -4215, -3417, -3816, -2891, -1981, -2436, 3.000, 0);
+vision::signature Vision20__SIG_2 (2, 0, 0, 0, 0, 0, 0, 3.000, 0);
+vision::signature Vision20__SIG_3 (3, 0, 0, 0, 0, 0, 0, 3.000, 0);
+vision::signature Vision20__SIG_4 (4, 0, 0, 0, 0, 0, 0, 3.000, 0);
+vision::signature Vision20__SIG_5 (5, 0, 0, 0, 0, 0, 0, 3.000, 0);
+vision::signature Vision20__SIG_6 (6, 0, 0, 0, 0, 0, 0, 3.000, 0);
+vision::signature Vision20__SIG_7 (7, 0, 0, 0, 0, 0, 0, 3.000, 0);
 vision Vision20 = vision (PORT20, 35, Vision20__SIG_1, Vision20__SIG_2, Vision20__SIG_3, Vision20__SIG_4, Vision20__SIG_5, Vision20__SIG_6, Vision20__SIG_7);
 /*vex-vision-config:end*/
 digital_out Piston = digital_out(Brain.ThreeWirePort.A);
-motor FlywheelFront = motor(PORT16, ratio6_1, false);
+motor FlywheelFront = motor(PORT16, ratio6_1, true);
 motor FlywheelRear = motor(PORT18, ratio6_1, false);
 motor_group Flywheel = motor_group(FlywheelFront, FlywheelRear);
 
