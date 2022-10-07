@@ -113,8 +113,8 @@ void usercontrol(void) {
     Brain.Screen.print((Flywheel.velocity(rpm) * 6));
     Brain.Screen.setCursor(7,1);
     Brain.Screen.print((FlywheelFront.temperature(celsius)));
-    Brain.Screen.setCursor(8,1);
-    Brain.Screen.print((FlywheelRear.temperature(celsius)));
+    //Brain.Screen.setCursor(8,1);
+    //Brain.Screen.print((FlywheelRear.temperature(celsius)));
     
     
   
