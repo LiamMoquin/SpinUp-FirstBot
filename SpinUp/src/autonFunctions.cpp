@@ -70,6 +70,3 @@ void visionStrafe(float speed /*speed to move at*/) //strafes to track an object
   }
 }
 
-void driveStraight(float velocityi = 0, float velocityf = 0, float rUpDist = .2){
-  
-}

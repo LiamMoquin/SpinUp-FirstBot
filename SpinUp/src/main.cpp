@@ -25,6 +25,7 @@
 #include "autonFunctions.h"
 #include "robotFunctions.h"
 #include "autonSelector.h"
+#include "PIDs.h"
 
 using namespace vex;
 
