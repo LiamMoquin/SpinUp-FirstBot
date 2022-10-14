@@ -25,6 +25,14 @@ void driveStraighti(float dist, float vi = 0, float vf = 100, float rUpDist = 0.
   error = 0; //sets error to 0
   lastError = 0; //sets lastError to 0
 
-  totalTargetDeg = (dist / (2 * M_PI * (2.75/2)) * 360);
+  mtrReset();
 
+  totalTargetDeg = (dist / (2 * M_PI * (2.75/2)) * 360) * 2;
+
+  double targetDeg = (totalTargetDeg * rUpDist);
+
+  while (mtrAvg <= targetDeg)
+  {
+    error = abs()
+  }
 }
