@@ -17,11 +17,11 @@ double mtrAvg()
   return ((frontLeft.rotation(degrees) + frontRight.rotation(degrees) + rearLeft.rotation(degrees) + rearRight.rotation(degrees)) / 4);
 }
 
-double totalTargetDeg; //degrees to rotate over the whole motion
-double lastError; //error in the last iteration
-double error; //error in the current iteration
-double akP = 1.6; //proportional tuning value
-double akD = 0; //derivative tuning value
+float totalTargetDeg; //degrees to rotate over the whole motion
+float lastError; //error in the last iteration
+float error; //error in the current iteration
+float akP = 1.6; //proportional tuning value
+float akD = 0; //derivative tuning value
 
 void driveStraighti(float dist, float vi = 0, float vf = 100, float rUpDist = 0.2){
   mtrReset();
@@ -33,7 +33,7 @@ void driveStraighti(float dist, float vi = 0, float vf = 100, float rUpDist = 0.
 
   totalTargetDeg = (dist / (2 * M_PI * (2.75/2)) * 360) * 2;
 
-  double targetDeg = (totalTargetDeg * rUpDist);
+  float targetDeg = (totalTargetDeg * rUpDist);
 
   while (mtrAvg() <= targetDeg)
   {
