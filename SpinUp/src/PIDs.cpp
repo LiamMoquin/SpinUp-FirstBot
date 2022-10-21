@@ -60,7 +60,7 @@ void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial veloci
     frontLeft.spin(forward);
     rearLeft.spin(forward);
     frontRight.spin(forward);
-    rearRight.setVelocity(forward);
+    rearRight.spin(forward);
     //makes motors spin
     lastError = error;
     wait(25, msec);

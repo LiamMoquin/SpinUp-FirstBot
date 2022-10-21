@@ -90,23 +90,31 @@ Discarded input sections
                 0x00000000        0x1 build/src/robot-config.o
  .llvm_addrsig  0x00000000       0x15 build/src/robot-config.o
  .text          0x00000000        0x0 build/src/PIDs.o
- .text._Z14driveStraightifff
-                0x00000000        0x4 build/src/PIDs.o
- .ARM.exidx.text._Z14driveStraightifff
+ .text._Z8mtrResetv
+                0x00000000       0x3c build/src/PIDs.o
+ .ARM.exidx.text._Z8mtrResetv
+                0x00000000        0x8 build/src/PIDs.o
+ .text._Z6mtrAvgv
+                0x00000000       0x8c build/src/PIDs.o
+ .ARM.exidx.text._Z6mtrAvgv
+                0x00000000        0x8 build/src/PIDs.o
+ .text._Z14driveStraightiffff
+                0x00000000      0x358 build/src/PIDs.o
+ .ARM.exidx.text._Z14driveStraightiffff
                 0x00000000        0x8 build/src/PIDs.o
  .bss.totalTargetDeg
-                0x00000000        0x8 build/src/PIDs.o
+                0x00000000        0x4 build/src/PIDs.o
  .bss.lastError
-                0x00000000        0x8 build/src/PIDs.o
- .bss.error     0x00000000        0x8 build/src/PIDs.o
- .data.akP      0x00000000        0x8 build/src/PIDs.o
- .bss.akD       0x00000000        0x8 build/src/PIDs.o
+                0x00000000        0x4 build/src/PIDs.o
+ .bss.error     0x00000000        0x4 build/src/PIDs.o
+ .data.akP      0x00000000        0x4 build/src/PIDs.o
+ .bss.akD       0x00000000        0x4 build/src/PIDs.o
  .comment       0x00000000       0x2e build/src/PIDs.o
  .note.GNU-stack
                 0x00000000        0x0 build/src/PIDs.o
  .ARM.attributes
                 0x00000000       0x3a build/src/PIDs.o
- .llvm_addrsig  0x00000000        0x0 build/src/PIDs.o
+ .llvm_addrsig  0x00000000        0x4 build/src/PIDs.o
  .text          0x00000000        0x0 build/src/autonFunctions.o
  .llvm_addrsig  0x00000000        0x6 build/src/autonFunctions.o
  .text          0x00000000        0x0 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
