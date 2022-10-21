@@ -29,6 +29,8 @@ motor FlywheelFront = motor(PORT16, ratio6_1, true);
 motor FlywheelRear = motor(PORT18, ratio6_1, false);
 motor_group Flywheel = motor_group(FlywheelFront, FlywheelRear);
 
+optical OpticalSensor = optical(PORT7, false);
+
 // VEXcode generated functions
 // define variable for remote controller enable/disable
 bool RemoteControlCodeEnabled = true;

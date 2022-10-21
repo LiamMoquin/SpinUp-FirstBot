@@ -6,14 +6,14 @@ void delay(int milliseconds)
   vex::task::sleep(milliseconds);
 }
 
-void shoot()
+void shoot()//activates piston to push disc into flywheel
 {
   Piston.set(false);
   delay(100);
   Piston.set(true);
 }
 
-void tempCheck()
+void tempCheck()//warns if temperature is too high
 {
   Brain.Screen.setCursor(10,3);
   Brain.Screen.setPenColor(red);
@@ -42,5 +42,12 @@ void tempCheck()
   {
     Brain.Screen.setCursor(12,1);
     Brain.Screen.print("FLYWHEEL REAR OVERHEAT!!!");
+  }
+}
+
+void rollerScore(bool redTeam)
+{
+  if(redTeam)
+  {
   }
 }

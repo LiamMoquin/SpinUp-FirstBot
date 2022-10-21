@@ -65,4 +65,6 @@ void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial veloci
     lastError = error;
     wait(25, msec);
   }
+
+  //void driveStraightc()
 }

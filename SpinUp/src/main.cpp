@@ -87,10 +87,11 @@ void usercontrol(void) {
   double Ch3 = Controller1.Axis3.position(percent);
   double Ch4 = Controller1.Axis4.position(percent);
   double Ch1 = Controller1.Axis1.position(percent);
+  //gets axis from controller as percent
 
   while (true) {
 
-    Flywheel.spin(fwd, 12000, voltageUnits::mV);
+    Flywheel.spin(fwd, 12000, voltageUnits::mV); //spins flywheel at top speed
     tempCheck();
 
     if (Controller1.ButtonR2.pressing())
@@ -105,15 +106,18 @@ void usercontrol(void) {
     rearLeft.setVelocity(Ch3-Ch4+Ch1, percent);
     frontRight.setVelocity(Ch3-Ch4-Ch1, percent);
     rearRight.setVelocity(Ch3+Ch4-Ch1, percent);
+    //does math for x-drive movement
 
     frontLeft.spin(forward);
     rearLeft.spin(forward);
     frontRight.spin(forward);
     rearRight.spin(forward);
+    //spins wheels
+
     Brain.Screen.setCursor(5,1);
-    Brain.Screen.print((Flywheel.velocity(rpm) * 6));
+    Brain.Screen.print((Flywheel.velocity(rpm) * 6));//prints fhlywheel rpm
     Brain.Screen.setCursor(7,1);
-    Brain.Screen.print((FlywheelFront.temperature(celsius)));
+    Brain.Screen.print((FlywheelFront.temperature(celsius)));//prints flywheel temp
     //Brain.Screen.setCursor(8,1);
     //Brain.Screen.print((FlywheelRear.temperature(celsius)));
     
@@ -151,6 +155,8 @@ int main() {
 
 /* useful stuff
 
-Notice that the Vision Sensor has a resolution for 316 pixels horizontally by 212 pixels vertically. Because the Vision Sensor's resolution is 316 by 212, the maximum range of detection is 0 to 315 on the X-axis and 0 to 211 on the Y-axis.
+Notice that the Vision Sensor has a resolution for 316 pixels horizontally by 212 pixels vertically.
+Because the Vision Sensor's resolution is 316 by 212, the maximum range of detection is 0 to 315 on the X-axis and
+0 to 211 on the Y-axis.
 
 */

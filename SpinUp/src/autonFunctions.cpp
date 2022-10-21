@@ -69,4 +69,3 @@ void visionStrafe(float speed /*speed to move at*/) //strafes to track an object
     }
   }
 }
-

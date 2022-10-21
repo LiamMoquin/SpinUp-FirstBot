@@ -23,6 +23,7 @@ extern digital_out Piston;
 extern motor FlywheelFront;
 extern motor FlywheelRear;
 extern motor_group Flywheel;
+extern optical OpticalSensor;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
