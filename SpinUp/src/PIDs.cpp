@@ -24,8 +24,12 @@ float error; //error in the current iteration
 float akP = 1.6; //proportional tuning value
 float akD = 0; //derivative tuning value
 
+float drivePerc = 0;
+
 void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial velocity*/, float vf = 100/*final velocity*/, float rUpDist = 0.2/*distance to ramp up over*/){
   mtrReset();
+  
+  drivePerc = rUpDist;
 
   error = 0; //sets error to 0
   lastError = 0; //sets lastError to 0
@@ -66,5 +70,11 @@ void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial veloci
     wait(25, msec);
   }
 
-  //void driveStraightc()
+  //void driveStraighti()
+}
+
+void driveStraightc(float distPerc = 0.8)
+{
+  
+
 }
