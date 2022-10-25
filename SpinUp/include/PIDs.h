@@ -4,3 +4,4 @@ using namespace vex;
 
 void mtrReset(void);
 void driveStraighti(float vi, float vf, float rUpDist);
+void driveStraightc(float endDistPerc);

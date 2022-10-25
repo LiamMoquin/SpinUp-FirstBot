@@ -24,13 +24,11 @@ float error; //error in the current iteration
 float akP = 1.6; //proportional tuning value
 float akD = 0; //derivative tuning value
 
-float drivePerc = 0;
+float drivePercTotal = 0;
 
 void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial velocity*/, float vf = 100/*final velocity*/, float rUpDist = 0.2/*distance to ramp up over*/){
   mtrReset();
   
-  drivePerc = rUpDist;
-
   error = 0; //sets error to 0
   lastError = 0; //sets lastError to 0
 
@@ -69,12 +67,38 @@ void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial veloci
     lastError = error;
     wait(25, msec);
   }
-
-  //void driveStraighti()
+  drivePercTotal = drivePercTotal + rUpDist;
 }
 
-void driveStraightc(float distPerc = 0.8)
+void driveStraightc(float endDistPerc = 0.8)
 {
-  
+  mtrReset();
 
+  error = 0; //sets error to 0
+  lastError = 0; //sets lastError to 0
+
+  mtrReset();
+
+  float targetDeg = (totalTargetDeg * (endDistPerc - drivePerctotal));//Sets target degrees for this specific instantiation
+
+  while (mtrAvg() <= targetDeg)
+  {
+    error = (abs(frontLeft.rotation(degrees) + rearLeft.rotation(degrees)) - (abs(frontRight.rotation(degrees) + rearRight.rotation(degrees))));
+    //error is how far from 0 the left motors - the right motors are
+
+    frontLeft.setVelocity(((error * akP) + akD * (error - lastError)), rpm);
+    rearLeft.setVelocity(((error * akP) + akD * (error - lastError)), rpm);
+    frontRight.setVelocity(((error * akP) + akD * (error - lastError)), rpm);
+    rearRight.setVelocity( - ((error * akP) + akD * (error - lastError)), rpm);
+    //sets velocity of motors to pid outputs
+    
+    frontLeft.spin(forward);
+    rearLeft.spin(forward);
+    frontRight.spin(forward);
+    rearRight.spin(forward);
+    //makes motors spin
+    lastError = error;
+    wait(25, msec);
+  }
+  drivePercTotal = drivePercTotal + endDistPerc;
 }
