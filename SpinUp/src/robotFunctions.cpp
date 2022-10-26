@@ -49,5 +49,11 @@ void rollerScore(bool redTeam)
 {
   if(redTeam)
   {
+    while(OpticalSensor.hue() <= 255)
+    {
+      //put shit here
+    }
   }
+
+  if(!redTeam)
 }

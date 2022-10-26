@@ -25,6 +25,7 @@ float akP = 1.6; //proportional tuning value
 float akD = 0; //derivative tuning value
 
 float drivePercTotal = 0;
+float lastTargetVelocity = 0;
 
 void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial velocity*/, float vf = 100/*final velocity*/, float rUpDist = 0.2/*distance to ramp up over*/){
   mtrReset();
@@ -47,7 +48,7 @@ void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial veloci
 
   while (mtrAvg() <= targetDeg)
   {
-    error = (abs(frontLeft.rotation(degrees) + rearLeft.rotation(degrees)) - (abs(frontRight.rotation(degrees) + rearRight.rotation(degrees))));
+    error = (std::abs(frontLeft.rotation(degrees) + rearLeft.rotation(degrees)) - (std::abs(frontRight.rotation(degrees) + rearRight.rotation(degrees))));
     //error is how far from 0 the left motors - the right motors are
 
     double accelCalc = (vf - vi) * (mtrAvg() / targetDeg) + vi;
@@ -65,9 +66,11 @@ void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial veloci
     rearRight.spin(forward);
     //makes motors spin
     lastError = error;
+
     wait(25, msec);
   }
   drivePercTotal = drivePercTotal + rUpDist;
+  lastTargetVelocity = vf;
 }
 
 void driveStraightc(float endDistPerc = 0.8)
@@ -79,17 +82,17 @@ void driveStraightc(float endDistPerc = 0.8)
 
   mtrReset();
 
-  float targetDeg = (totalTargetDeg * (endDistPerc - drivePerctotal));//Sets target degrees for this specific instantiation
+  float targetDeg = (totalTargetDeg * (endDistPerc - drivePercTotal));//Sets target degrees for this specific instantiation
 
   while (mtrAvg() <= targetDeg)
   {
-    error = (abs(frontLeft.rotation(degrees) + rearLeft.rotation(degrees)) - (abs(frontRight.rotation(degrees) + rearRight.rotation(degrees))));
+    error = (std::abs(frontLeft.rotation(degrees) + rearLeft.rotation(degrees)) - (std::abs(frontRight.rotation(degrees) + rearRight.rotation(degrees))));
     //error is how far from 0 the left motors - the right motors are
 
-    frontLeft.setVelocity(((error * akP) + akD * (error - lastError)), rpm);
-    rearLeft.setVelocity(((error * akP) + akD * (error - lastError)), rpm);
-    frontRight.setVelocity(((error * akP) + akD * (error - lastError)), rpm);
-    rearRight.setVelocity( - ((error * akP) + akD * (error - lastError)), rpm);
+    frontLeft.setVelocity(((error * akP) + akD * (error - lastError)) - lastTargetVelocity, rpm);
+    rearLeft.setVelocity(((error * akP) + akD * (error - lastError)) - lastTargetVelocity, rpm);
+    frontRight.setVelocity(lastTargetVelocity - ((error * akP) + akD * (error - lastError)), rpm);
+    rearRight.setVelocity(lastTargetVelocity - ((error * akP) + akD * (error - lastError)), rpm);
     //sets velocity of motors to pid outputs
     
     frontLeft.spin(forward);
@@ -101,4 +104,38 @@ void driveStraightc(float endDistPerc = 0.8)
     wait(25, msec);
   }
   drivePercTotal = drivePercTotal + endDistPerc;
+}
+
+void driveStraightf(float vf, float endDistPerc)
+{
+  mtrReset();
+
+  error = 0;
+  lastError = 0;
+  
+  mtrReset();
+  
+  float targetDeg = totalTargetDeg * (endDistPerc - drivePercTotal);
+  while(mtrAvg() <= targetDeg)
+  {
+    error = (std::abs(frontLeft.rotation(degrees) + rearLeft.rotation(degrees)) - (std::abs(frontRight.rotation(degrees) + rearRight.rotation(degrees))));
+    
+    double accelCalc = (vf = lastTargetVelocity) * (mtrAvg() / targetDeg) + lastTargetVelocity;
+
+    frontLeft.setVelocity((((error * akP) + akD * (error - lastError)) + accelCalc), rpm);
+    rearLeft.setVelocity((((error * akP) + akD * (error - lastError)) + accelCalc), rpm);
+    frontRight.setVelocity((accelCalc - ((error * akP) + akD * (error - lastError))), rpm);
+    rearRight.setVelocity((accelCalc - ((error * akP ) + akD * (error - lastError))), rpm);
+
+    frontLeft.spin(forward);
+    rearLeft.spin(forward);
+    frontRight.spin(forward);
+    rearRight.spin(forward);
+
+    lastError = error;
+
+    wait(25, msec);
+  }
+  drivePercTotal = drivePercTotal + endDistPerc;
+  lastTargetVelocity = vf;
 }

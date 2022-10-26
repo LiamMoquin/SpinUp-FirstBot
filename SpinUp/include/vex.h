@@ -12,6 +12,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+//this is probably where a problem is
+#include <cmath>
+
 #include "v5.h"
 #include "v5_vcs.h"
 

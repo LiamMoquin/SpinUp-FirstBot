@@ -3,5 +3,6 @@ using namespace vex;
 #include "robotFunctions.h"
 
 void mtrReset(void);
-void driveStraighti(float vi, float vf, float rUpDist);
+void driveStraighti(float dist, float vi, float vf, float rUpDist);
 void driveStraightc(float endDistPerc);
+void driveStraightf(float vf,float endDistPerc)
