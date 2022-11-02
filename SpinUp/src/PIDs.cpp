@@ -139,3 +139,27 @@ void driveStraightf(float vf, float endDistPerc)
   drivePercTotal = drivePercTotal + endDistPerc;
   lastTargetVelocity = vf;
 }
+
+
+
+
+
+
+
+
+
+//Turn PDs
+
+float tkP = 1.6; //proportional tuning value
+float tkD = 0; //derivative tuning value
+float errorRange = 1;
+
+void turnPD(float targetHead, float vt)
+{
+  float error = targetHead - imu.heading(); 
+
+  while ((imu.heading() <= error) && (targetHead <= 180))
+  {
+    
+  }
+}

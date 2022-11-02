@@ -30,6 +30,7 @@ motor FlywheelRear = motor(PORT18, ratio6_1, false);
 motor_group Flywheel = motor_group(FlywheelFront, FlywheelRear);
 
 optical OpticalSensor = optical(PORT7, false);
+inertial imu = inertial(PORT15);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable

@@ -24,6 +24,7 @@ extern motor FlywheelFront;
 extern motor FlywheelRear;
 extern motor_group Flywheel;
 extern optical OpticalSensor;
+extern inertial imu;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

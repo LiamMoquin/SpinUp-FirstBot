@@ -1,6 +1,7 @@
 #include "vex.h"
 #include "autonFunctions.h"
 #include "robotFunctions.h"
+#include "PIDs.h"
 
 using namespace vex;
 
@@ -68,4 +69,12 @@ void visionStrafe(float speed /*speed to move at*/) //strafes to track an object
       }
     }
   }
+}
+
+void trigMove(float distx, float disty, float vi, float vf, float rUpDist)
+{
+  angleCalc = atan(distx/disty);
+  distCalc = sqrt(pow(distx,2) + pow(disty,2));
+
+  
 }
