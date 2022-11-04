@@ -66,7 +66,8 @@ void pre_auton(void) {
 
 
 void autonomous(void) {
-  visionStrafe(45);
+  trigMove(35, 30, 0, 70, .2);
+  //visionStrafe(45);
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
