@@ -152,14 +152,42 @@ void driveStraightf(float vf, float endDistPerc)
 
 float tkP = 1.6; //proportional tuning value
 float tkD = 0; //derivative tuning value
-float errorRange = 1;
+float errorRange = 1; //acceptable error range
 
 void turnPD(float targetHead, float vt)
 {
-  float error = targetHead - imu.heading(); 
+  float error = targetHead - imu.heading();
+  float lastError = 0;
 
-  while ((imu.heading() <= error) && (targetHead <= 180))
+  while ((imu.heading() <= error + errorRange) && (error <= 180))
   {
-    
+    float targetVel = (error * tkP + (error - lastError) * tkD + error + vt);
+    frontLeft.setVelocity(-targetVel, percent);
+    rearLeft.setVelocity(-targetVel, percent);
+    frontRight.setVelocity(targetVel, percent);
+    rearRight.setVelocity(targetVel, percent);
+
+    frontLeft.spin(forward);
+    rearLeft.spin(forward);
+    frontRight.spin(forward);
+    rearRight.spin(forward);
+
+    lastError = error;
+  }
+
+    while ((imu.heading() >= error - errorRange) && (error > 180))
+  {
+    float targetVel = (error * tkP + (error - lastError) * tkD + error + vt);
+    frontLeft.setVelocity(targetVel, percent);
+    rearLeft.setVelocity(targetVel, percent);
+    frontRight.setVelocity(-targetVel, percent);
+    rearRight.setVelocity(-targetVel, percent);
+
+    frontLeft.spin(forward);
+    rearLeft.spin(forward);
+    frontRight.spin(forward);
+    rearRight.spin(forward);
+
+    lastError = error;
   }
 }

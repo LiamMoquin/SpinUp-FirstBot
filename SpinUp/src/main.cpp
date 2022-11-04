@@ -94,10 +94,8 @@ void usercontrol(void) {
     Flywheel.spin(fwd, 12000, voltageUnits::mV); //spins flywheel at top speed
     tempCheck();
 
-    if (Controller1.ButtonR2.pressing())
-    {
-      shoot();
-    }
+    Controller1.ButtonR2.pressed(shoot);//shoots disc when right bumper 2 is pressed
+
     Ch3 = Controller1.Axis3.position(percent);
     Ch4 = Controller1.Axis4.position(percent);
     Ch1 = Controller1.Axis1.position(percent);

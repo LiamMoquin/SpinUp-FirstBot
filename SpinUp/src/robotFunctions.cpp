@@ -56,4 +56,5 @@ void rollerScore(bool redTeam)
   }
 
   if(!redTeam)
+  {}
 }

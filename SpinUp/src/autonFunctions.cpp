@@ -73,8 +73,11 @@ void visionStrafe(float speed /*speed to move at*/) //strafes to track an object
 
 void trigMove(float distx, float disty, float vi, float vf, float rUpDist)
 {
-  angleCalc = atan(distx/disty);
-  distCalc = sqrt(pow(distx,2) + pow(disty,2));
+  float angleCalc = atan(distx/disty);
+  float distCalc = sqrt(pow(distx,2) + pow(disty,2));
 
-  
+  turnPD(angleCalc, 40);
+  driveStraighti(distCalc, vi, vf, rUpDist);
+  driveStraightc(1-rUpDist);
+  driveStraightf(0, rUpDist);
 }
