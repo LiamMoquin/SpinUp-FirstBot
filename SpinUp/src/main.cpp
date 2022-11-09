@@ -66,7 +66,10 @@ void pre_auton(void) {
 
 
 void autonomous(void) {
-  trigMove(35, 30, 0, 70, .2);
+  driveStraighti(24, 0, 100, 0.4);
+  driveStraightc(0.8);
+  driveStraightf(0, 1);
+  //trigMove(35, 30, 0, 70, .2);
   //visionStrafe(45);
   // ..........................................................................
   // Insert autonomous user code here.
@@ -96,6 +99,8 @@ void usercontrol(void) {
     tempCheck();
 
     Controller1.ButtonR2.pressed(shoot);//shoots disc when right bumper 2 is pressed
+    
+    Controller1.ButtonL2.pressed(rollerScore);
 
     Ch3 = Controller1.Axis3.position(percent);
     Ch4 = Controller1.Axis4.position(percent);
@@ -116,7 +121,7 @@ void usercontrol(void) {
     Brain.Screen.setCursor(5,1);
     Brain.Screen.print((Flywheel.velocity(rpm) * 6));//prints fhlywheel rpm
     Brain.Screen.setCursor(7,1);
-    Brain.Screen.print((FlywheelFront.temperature(celsius)));//prints flywheel temp
+    Brain.Screen.print((Flywheel.temperature(celsius)));//prints flywheel temp
     //Brain.Screen.setCursor(8,1);
     //Brain.Screen.print((FlywheelRear.temperature(celsius)));
     

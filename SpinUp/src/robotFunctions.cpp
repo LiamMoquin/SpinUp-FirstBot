@@ -33,28 +33,22 @@ void tempCheck()//warns if temperature is too high
   {
     Brain.Screen.print("RIGHT FRONT OVERHEAT!!!");
   }
-  if(FlywheelFront.temperature(celsius) >= 45)
+  if(Flywheel.temperature(celsius) >= 45)
   {
     Brain.Screen.setCursor(11,1);
-    Brain.Screen.print("FLYWHEEL FRONT OVERHEAT!!!");
+    Brain.Screen.print("FLYWHEEL OVERHEAT!!!");
   }
-  if(FlywheelRear.temperature(celsius) >= 45)
+  if(Roller.temperature(celsius) >= 45)
   {
     Brain.Screen.setCursor(12,1);
-    Brain.Screen.print("FLYWHEEL REAR OVERHEAT!!!");
+    Brain.Screen.print("ROLLER REAR OVERHEAT!!!");
   }
 }
 
-void rollerScore(bool redTeam)
+void rollerScore()
 {
-  if(redTeam)
+  while(OpticalSensor.hue() <= 255)
   {
-    while(OpticalSensor.hue() <= 255)
-    {
-      //put shit here
-    }
+    Roller.setVelocity(75, percent);
   }
-
-  if(!redTeam)
-  {}
 }
