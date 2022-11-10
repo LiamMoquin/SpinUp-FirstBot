@@ -47,8 +47,20 @@ void tempCheck()//warns if temperature is too high
 
 void rollerScore()
 {
-  while(OpticalSensor.hue() <= 255)
+  Roller.setVelocity(90, percent);
+  Roller.spin(forward);
+  /*int aHue = OpticalSensor.hue();
+  printf("%i",aHue);
+  while(aHue >= 50)
   {
-    Roller.setVelocity(75, percent);
+    Roller.setVelocity(100, percent);
+    Roller.spin(forward);
+    aHue = OpticalSensor.hue();
   }
+  while(aHue <= 50)
+  {
+    delay(50);
+    Roller.stop();
+    aHue = OpticalSensor.hue();
+  }*/
 }

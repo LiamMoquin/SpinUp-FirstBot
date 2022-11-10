@@ -48,6 +48,7 @@ competition Competition;
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+  OpticalSensor.setLightPower(200);
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -66,9 +67,9 @@ void pre_auton(void) {
 
 
 void autonomous(void) {
-  driveStraighti(24, 0, 100, 0.4);
-  driveStraightc(0.8);
-  driveStraightf(0, 1);
+  driveStraighti(24, 10, 100, 0.4);
+  //driveStraightc(0.8);
+  //driveStraightf(0, 1);
   //trigMove(35, 30, 0, 70, .2);
   //visionStrafe(45);
   // ..........................................................................
@@ -86,6 +87,15 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
+void rollerSpin()
+{
+  Roller.setVelocity(100, percent);
+  Roller.spin(forward);
+}
+void rollerStop()
+{
+  Roller.stop();
+}
 void usercontrol(void) {
   // User control code here, inside the loop
   double Ch3 = Controller1.Axis3.position(percent);
@@ -97,10 +107,12 @@ void usercontrol(void) {
 
     Flywheel.spin(fwd, 12000, voltageUnits::mV); //spins flywheel at top speed
     tempCheck();
+    Intake.spin(fwd, 12000, voltageUnits::mV);
 
     Controller1.ButtonR2.pressed(shoot);//shoots disc when right bumper 2 is pressed
     
-    Controller1.ButtonL2.pressed(rollerScore);
+    Controller1.ButtonL1.pressed(rollerSpin);
+    Controller1.ButtonL2.pressed(rollerStop);
 
     Ch3 = Controller1.Axis3.position(percent);
     Ch4 = Controller1.Axis4.position(percent);
