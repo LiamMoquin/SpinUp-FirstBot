@@ -67,7 +67,7 @@ void pre_auton(void) {
 
 
 void autonomous(void) {
-  driveStraighti(24, 10, 100, 0.4);
+  driveStraighti(24, 10, 100, 0.2);
   //driveStraightc(0.8);
   //driveStraightf(0, 1);
   //trigMove(35, 30, 0, 70, .2);
