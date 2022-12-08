@@ -64,10 +64,23 @@ void pre_auton(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-
+void rollerSpin()
+{
+  Roller.setVelocity(30, percent);
+  Roller.spin(forward);
+}
+void rollerStop()
+{
+  Roller.stop();
+}
 
 void autonomous(void) {
-  driveStraighti(24, 10, 100, 0.2);
+  driveTime(1, 50);
+  rollerSpin();
+  wait(.2, sec);
+  rollerStop();
+
+  //driveStraighti(24, 10, 100, 0.2);
   //driveStraightc(0.8);
   //driveStraightf(0, 1);
   //trigMove(35, 30, 0, 70, .2);
@@ -87,34 +100,61 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void rollerSpin()
+
+float flywheelState = 12000;
+
+void flywheelSlowA()
 {
-  Roller.setVelocity(100, percent);
-  Roller.spin(forward);
+  flywheelState = 0;
 }
-void rollerStop()
+void flywheelSlowB()
 {
-  Roller.stop();
+  flywheelState = 12000;
 }
+void flywheelSlowY()
+{
+  flywheelState = 12000 * .8;
+}
+
 void usercontrol(void) {
   // User control code here, inside the loop
-  double Ch3 = Controller1.Axis3.position(percent);
+  double Ch3 = Controller1.Axis2.position(percent);
   double Ch4 = Controller1.Axis4.position(percent);
   double Ch1 = Controller1.Axis1.position(percent);
   //gets axis from controller as percent
+  
 
   while (true) {
-
-    Flywheel.spin(fwd, 12000, voltageUnits::mV); //spins flywheel at top speed
+    if(Controller1.ButtonA.pressing())
+    {
+      flywheelSlowA();
+    }
+    if(Controller1.ButtonB.pressing())
+    {
+      flywheelSlowB();
+    }
+    if(Controller1.ButtonY.pressing())
+    {
+      flywheelSlowY();
+    }
+    Flywheel.spin(fwd, flywheelState, voltageUnits::mV); //spins flywheel at top speed
     tempCheck();
-    Intake.spin(fwd, 12000, voltageUnits::mV);
+
+    if(Controller1.ButtonL1.pressing())
+    {
+      Intake.spin(fwd, 12000, voltageUnits::mV);
+    }
+    if(Controller1.ButtonL2.pressing())
+    {
+      Intake.stop();
+    }
 
     Controller1.ButtonR2.pressed(shoot);//shoots disc when right bumper 2 is pressed
     
     Controller1.ButtonL1.pressed(rollerSpin);
     Controller1.ButtonL2.pressed(rollerStop);
 
-    Ch3 = Controller1.Axis3.position(percent);
+    Ch3 = Controller1.Axis2.position(percent);
     Ch4 = Controller1.Axis4.position(percent);
     Ch1 = Controller1.Axis1.position(percent);
 
@@ -137,7 +177,7 @@ void usercontrol(void) {
     //Brain.Screen.setCursor(8,1);
     //Brain.Screen.print((FlywheelRear.temperature(celsius)));
     
-    
+    Roller.spin(forward, Controller1.Axis3.position(), percent);
   
     
     wait(20, msec); // Sleep the task for a short amount of time to
