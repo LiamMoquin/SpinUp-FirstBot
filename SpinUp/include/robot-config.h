@@ -22,7 +22,9 @@ extern triport Expander19;
 extern digital_out Piston;
 extern motor Flywheel;
 extern motor Roller;
-extern motor Intake;
+extern motor IntakeLeft;
+extern motor IntakeRight;
+extern motor_group Intake;
 extern optical OpticalSensor;
 extern inertial imu;
 

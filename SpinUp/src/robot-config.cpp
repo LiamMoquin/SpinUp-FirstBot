@@ -27,7 +27,9 @@ vision Vision20 = vision (PORT20, 35, Vision20__SIG_1, Vision20__SIG_2, Vision20
 digital_out Piston = digital_out(Brain.ThreeWirePort.A);
 motor Flywheel = motor(PORT5, ratio6_1, true);
 motor Roller = motor(PORT6, ratio6_1, false);
-motor Intake = motor(PORT14, ratio6_1, true);
+motor IntakeLeft = motor(PORT14, ratio6_1, true);
+motor IntakeRight = motor(PORT15, ratio6_1, false);
+motor_group Intake = motor_group(IntakeLeft, IntakeRight);
 
 optical OpticalSensor = optical(PORT7, false);
 inertial imu = inertial(PORT15);

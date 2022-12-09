@@ -75,10 +75,13 @@ void rollerStop()
 }
 
 void autonomous(void) {
+  //left side auton
   driveTime(1, 50);
   rollerSpin();
-  wait(.2, sec);
+  wait(1, sec);
   rollerStop();
+
+  //right side auton
 
   //driveStraighti(24, 10, 100, 0.2);
   //driveStraightc(0.8);
@@ -109,11 +112,11 @@ void flywheelSlowA()
 }
 void flywheelSlowB()
 {
-  flywheelState = 12000;
+  flywheelState = 12000 * .8;
 }
 void flywheelSlowY()
 {
-  flywheelState = 12000 * .8;
+  flywheelState = 12000;
 }
 
 void usercontrol(void) {
