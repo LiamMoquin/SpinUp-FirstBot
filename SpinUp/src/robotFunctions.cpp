@@ -8,9 +8,19 @@ void delay(int milliseconds)
 
 void shoot()//activates piston to push disc into flywheel
 {
-  Piston.set(false);
-  delay(100);
   Piston.set(true);
+  delay(100);
+  Piston.set(false);
+}
+
+void expand()
+{
+  for (int i = 0; i<10; i++)
+  {
+    Expansion.set(true);
+    wait(100,msec);
+    Expansion.set(false);
+  }
 }
 
 void tempCheck()//warns if temperature is too high

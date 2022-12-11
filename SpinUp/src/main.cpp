@@ -49,6 +49,7 @@ void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   OpticalSensor.setLightPower(200);
+  imu.calibrate();
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -76,12 +77,32 @@ void rollerStop()
 
 void autonomous(void) {
   //left side auton
-  driveTime(1, 50);
+  /*driveTime(1, 50);
   rollerSpin();
-  wait(1, sec);
-  rollerStop();
+  wait(1.25, sec);
+  rollerStop();*/
+
+  /*driveTime(1, 50);
+  rollerSpin();
+  wait(.75, sec);
+  rollerStop();*/
+
+  /*while (imu.heading() >= 225)
+  {
+    frontLeft.spin(reverse, 30, percent);
+    rearLeft.spin(reverse, 30, percent);
+    frontRight.spin(fwd, 30, percent);
+    rearRight.spin(fwd, 30, percent);
+  }*/
 
   //right side auton
+  Flywheel.spin(fwd, 12000*.85, voltageUnits::mV);
+  wait(4, sec);
+  shoot();
+  wait(500, msec);
+  shoot();
+
+  //expand();
 
   //driveStraighti(24, 10, 100, 0.2);
   //driveStraightc(0.8);
@@ -102,7 +123,6 @@ void autonomous(void) {
 /*                                                                           */
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
-
 
 float flywheelState = 12000;
 
@@ -125,6 +145,8 @@ void usercontrol(void) {
   double Ch4 = Controller1.Axis4.position(percent);
   double Ch1 = Controller1.Axis1.position(percent);
   //gets axis from controller as percent
+
+  Intake.spin(fwd, 12000, voltageUnits::mV);
   
 
   while (true) {
@@ -153,6 +175,7 @@ void usercontrol(void) {
     }
 
     Controller1.ButtonR2.pressed(shoot);//shoots disc when right bumper 2 is pressed
+    Controller1.ButtonDown.pressed(expand);
     
     Controller1.ButtonL1.pressed(rollerSpin);
     Controller1.ButtonL2.pressed(rollerStop);

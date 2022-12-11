@@ -20,6 +20,7 @@ extern signature Vision20__SIG_7;
 extern vision Vision20;
 extern triport Expander19;
 extern digital_out Piston;
+extern digital_out Expansion;
 extern motor Flywheel;
 extern motor Roller;
 extern motor IntakeLeft;

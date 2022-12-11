@@ -25,6 +25,7 @@ vision::signature Vision20__SIG_7 (7, 0, 0, 0, 0, 0, 0, 3.000, 0);
 vision Vision20 = vision (PORT20, 35, Vision20__SIG_1, Vision20__SIG_2, Vision20__SIG_3, Vision20__SIG_4, Vision20__SIG_5, Vision20__SIG_6, Vision20__SIG_7);
 /*vex-vision-config:end*/
 digital_out Piston = digital_out(Brain.ThreeWirePort.A);
+digital_out Expansion = digital_out(Brain.ThreeWirePort.B);
 motor Flywheel = motor(PORT5, ratio6_1, true);
 motor Roller = motor(PORT6, ratio6_1, false);
 motor IntakeLeft = motor(PORT14, ratio6_1, true);
@@ -32,7 +33,7 @@ motor IntakeRight = motor(PORT15, ratio6_1, false);
 motor_group Intake = motor_group(IntakeLeft, IntakeRight);
 
 optical OpticalSensor = optical(PORT7, false);
-inertial imu = inertial(PORT15);
+inertial imu = inertial(PORT18);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
