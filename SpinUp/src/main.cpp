@@ -147,6 +147,8 @@ void usercontrol(void) {
   //gets axis from controller as percent
 
   Intake.spin(fwd, 12000, voltageUnits::mV);
+
+  Brain.resetTimer();
   
 
   while (true) {
@@ -175,7 +177,9 @@ void usercontrol(void) {
     }
 
     Controller1.ButtonR2.pressed(shoot);//shoots disc when right bumper 2 is pressed
-    Controller1.ButtonDown.pressed(expand);
+    //Controller1.ButtonDown.pressed(expand(endgame()));
+    
+    if(Controller1.ButtonDown.pressing()) expand(endGame());
     
     Controller1.ButtonL1.pressed(rollerSpin);
     Controller1.ButtonL2.pressed(rollerStop);

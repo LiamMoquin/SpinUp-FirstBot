@@ -66,10 +66,10 @@ void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial veloci
     rearLeft.setVelocity((accelCalc - ((error * akP) + akD * (error - lastError))), rpm);
     //sets velocity of motors to pid outputs
     
-    frontLeft.spin(forward);
-    rearLeft.spin(forward);
-    frontRight.spin(forward);
-    rearRight.spin(forward);
+    frontLeft.spin(fwd);
+    rearLeft.spin(fwd);
+    frontRight.spin(fwd);
+    rearRight.spin(fwd);
     //makes motors spin
     lastError = error;
 
@@ -101,10 +101,10 @@ void driveStraightc(float endDistPerc = 0.8)
     rearRight.setVelocity(lastTargetVelocity - ((error * akP) + akD * (error - lastError)), rpm);
     //sets velocity of motors to pid outputs
     
-    frontLeft.spin(forward);
-    rearLeft.spin(forward);
-    frontRight.spin(forward);
-    rearRight.spin(forward);
+    frontLeft.spin(fwd);
+    rearLeft.spin(fwd);
+    frontRight.spin(fwd);
+    rearRight.spin(fwd);
     //makes motors spin
     lastError = error;
     wait(25, msec);
@@ -133,10 +133,10 @@ void driveStraightf(float vf, float endDistPerc)
     frontRight.setVelocity((accelCalc - ((error * akP) + akD * (error - lastError))), rpm);
     rearRight.setVelocity((accelCalc - ((error * akP ) + akD * (error - lastError))), rpm);
 
-    frontLeft.spin(forward);
-    rearLeft.spin(forward);
-    frontRight.spin(forward);
-    rearRight.spin(forward);
+    frontLeft.spin(fwd);
+    rearLeft.spin(fwd);
+    frontRight.spin(fwd);
+    rearRight.spin(fwd);
 
     lastError = error;
 
@@ -173,10 +173,10 @@ void turnPD(float targetHead, float vt)
     frontRight.setVelocity(targetVel, percent);
     rearRight.setVelocity(targetVel, percent);
 
-    frontLeft.spin(forward);
-    rearLeft.spin(forward);
-    frontRight.spin(forward);
-    rearRight.spin(forward);
+    frontLeft.spin(fwd);
+    rearLeft.spin(fwd);
+    frontRight.spin(fwd);
+    rearRight.spin(fwd);
 
     lastError = error;
   }
@@ -189,10 +189,10 @@ void turnPD(float targetHead, float vt)
     frontRight.setVelocity(-targetVel, percent);
     rearRight.setVelocity(-targetVel, percent);
 
-    frontLeft.spin(forward);
-    rearLeft.spin(forward);
-    frontRight.spin(forward);
-    rearRight.spin(forward);
+    frontLeft.spin(fwd);
+    rearLeft.spin(fwd);
+    frontRight.spin(fwd);
+    rearRight.spin(fwd);
 
     lastError = error;
   }

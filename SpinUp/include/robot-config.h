@@ -10,6 +10,7 @@ extern motor rearLeft;
 extern motor frontRight;
 extern motor rearRight;
 extern controller Controller1;
+extern controller Controller2;
 extern signature Vision20__SIG_1;
 extern signature Vision20__SIG_2;
 extern signature Vision20__SIG_3;

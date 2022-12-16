@@ -15,18 +15,21 @@ void shoot()//activates piston to push disc into flywheel
 
 bool endGame()
 {
-  Brain.resetTimer();
-  int startTime = Brai
-  Brain.timer(seconds);
-  if 
+  if ((60 - Brain.timer(seconds) >= 10) && Controller2.ButtonDown.pressing()) return true;
+
+  else return false;
 }
-void expand()
+
+void expand(bool armed = false)
 {
-  for (int i = 0; i<10; i++)
+  if (armed == true)
   {
-    Expansion.set(true);
-    wait(100,msec);
-    Expansion.set(false);
+    for (int i = 0; i<10; i++)
+    {
+      Expansion.set(true);
+      wait(100,msec);
+      Expansion.set(false);
+    }
   }
 }
 
