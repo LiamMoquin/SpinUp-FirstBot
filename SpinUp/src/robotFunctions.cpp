@@ -13,6 +13,13 @@ void shoot()//activates piston to push disc into flywheel
   Piston.set(false);
 }
 
+bool endGame()
+{
+  Brain.resetTimer();
+  int startTime = Brai
+  Brain.timer(seconds);
+  if 
+}
 void expand()
 {
   for (int i = 0; i<10; i++)
