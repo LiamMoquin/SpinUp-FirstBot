@@ -215,6 +215,8 @@ void usercontrol(void) {
   }
 }
 
+bool isEvil = false;
+
 //
 // Main will set up the competition functions and callbacks.
 //
@@ -228,6 +230,14 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
+    if(isEvil)
+    {
+      Brain.Screen.setFillColor(red);
+    }
+    else
+    {
+      Brain.Screen.setFillColor(blue);
+    }
     wait(100, msec);
   }
 }
