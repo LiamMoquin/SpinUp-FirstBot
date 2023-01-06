@@ -69,18 +69,13 @@ void rollerScore()
 {
   Roller.setVelocity(30, percent);
   Roller.spin(forward);
-  int aHue = OpticalSensor.hue();
-  printf("%i",aHue);
-  while(aHue >= 50)
+  while(OpticalSensor.color() != red)
   {
-    Roller.setVelocity(100, percent);
     Roller.spin(forward);
-    aHue = OpticalSensor.hue();
   }
-  while(aHue < 50)
+  while(OpticalSensor.color() == blue)
   {
-    delay(50);
+    wait(50, msec);
     Roller.stop();
-    aHue = OpticalSensor.hue();
   }
 }
