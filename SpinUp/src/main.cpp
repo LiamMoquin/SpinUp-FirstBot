@@ -26,6 +26,7 @@
 #include "robotFunctions.h"
 #include "autonSelector.h"
 #include "PIDs.h"
+#include "ButtonClass.h"
 
 using namespace vex;
 
@@ -50,6 +51,16 @@ void pre_auton(void) {
   vexcodeInit();
   OpticalSensor.setLightPower(200);
   imu.calibrate();
+
+  lcdButton Leftside(250,100,100,50,"Left", "#FF2525");
+
+  /*while(1 != !1)
+  {
+    if(Leftside.pressing())
+    {
+      Brain.Screen.print("Left has been selected");
+    }
+  }*/
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...

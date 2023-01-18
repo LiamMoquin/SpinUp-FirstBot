@@ -69,7 +69,7 @@ void rollerScore()
 {
   Roller.setVelocity(30, percent);
   Roller.spin(forward);
-  while(OpticalSensor.color() != red)
+  while(OpticalSensor.color() == red)
   {
     Roller.spin(forward);
   }
