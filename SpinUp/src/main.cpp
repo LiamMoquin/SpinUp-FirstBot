@@ -44,16 +44,56 @@ competition Competition;
 /*  function is only called once after the V5 has been powered on and        */
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
-
+int autonSwitch;
 
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  Controller1.Screen.clearScreen();
+  Controller2.Screen.clearScreen();
   OpticalSensor.setLightPower(200);
   imu.calibrate();
 
-  lcdButton Leftside(250,100,100,50,"Left", "#FF2525");
+  lcdButton Rightside(375,100,100,50,"Right", "#FF2525");
+  lcdButton Leftside(125,100,100,50,"Left", "#FF2525");
+  lcdButton ExpansionButton(250,50,100,50,"Expansion", "#FF2525");
+  lcdButton Nothing(250,200,100,50,"Nothing", "#FF2525");
+  Brain.Screen.setCursor(1, 1);
+
+  while(true)
+  {
+    if(Leftside.pressing())
+    {
+      Brain.Screen.clearScreen();
+      Brain.Screen.setCursor(1, 1);
+      Brain.Screen.print("Left Selected");
+      autonSwitch = 0;
+      break;
+    }
+
+    if(Rightside.pressing())
+    {
+      Brain.Screen.clearScreen();
+      Brain.Screen.setCursor(1, 1);
+      Brain.Screen.print("Right Selected");
+      autonSwitch = 1;
+      break;
+    }
+
+    if(ExpansionButton.pressing())
+    {
+      Brain.Screen.clearScreen();
+      Brain.Screen.setCursor(1, 1);
+      Brain.Screen.print("Expansion Selected");
+      autonSwitch = 2;
+      break;
+    }
+    
+    if(Nothing.pressing())
+    {
+      Brain.Screen.clearScreen();
+      break;
+    }
+  }
 
   /*while(1 != !1)
   {
@@ -80,7 +120,7 @@ void pre_auton(void) {
 void rollerSpin()
 {
   Roller.setVelocity(30, percent);
-  Roller.spin(forward);
+  Roller.spin(reverse);
 }
 void rollerStop()
 {
@@ -88,11 +128,20 @@ void rollerStop()
 }
 
 void autonomous(void) {
+
+  if(autonSwitch == 0)
+  {
+    //PUT ANYTHING YOU WANT FOR THE LEFT SIDE HERE
+  }
+
   //left side auton
-  /*driveTime(1, 50);
-  rollerSpin();
-  wait(1.25, sec);
+  /*rollerSpin();
+  driveTime(1, 50);
+  wait(.2, sec);
   rollerStop();*/
+  
+
+  
 
   /*driveTime(1, 50);
   rollerSpin();
@@ -107,14 +156,21 @@ void autonomous(void) {
     rearRight.spin(fwd, 30, percent);
   }*/
 
-  //right side auton
-  Flywheel.spin(fwd, 12000*.85, voltageUnits::mV);
-  wait(4, sec);
-  shoot();
-  wait(500, msec);
-  shoot();
+  //right side auton good
+  if(autonSwitch == 1)
+  {
+    Flywheel.spin(fwd, 12000*.8, voltageUnits::mV);
+    wait(4, sec);
+    shoot();
+    wait(500, msec);
+    shoot();
+  }
 
-  //expand();
+  //EXPANSION CODE
+  if(autonSwitch == 2)
+  {
+    expand(true);
+  }
 
   //driveStraighti(24, 10, 100, 0.2);
   //driveStraightc(0.8);
@@ -161,6 +217,10 @@ void usercontrol(void) {
   Intake.spin(fwd, 12000, voltageUnits::mV);
 
   Brain.resetTimer();
+  Controller2.Screen.clearScreen();
+  Brain.Screen.clearScreen();
+  Controller2.Screen.setCursor(1,1);
+  Controller2.Screen.print("Shots Triggers:");
   
 
   while (true) {

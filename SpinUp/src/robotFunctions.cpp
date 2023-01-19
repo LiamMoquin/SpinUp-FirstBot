@@ -6,14 +6,16 @@ void delay(int milliseconds)
   vex::task::sleep(milliseconds);
 }
 
+int shotCount = 0;
 void shoot()//activates piston to push disc into flywheel
 {
   Piston.set(true);
-  delay(100);
+  wait(100,msec);
   Piston.set(false);
-
-  Controller1.Screen.setCursor(1, 1);
-  Controller1.Screen.print("Shot Trigger");
+  
+  shotCount += 1;
+  Controller2.Screen.setCursor(2, 1);
+  Controller2.Screen.print(shotCount/31);
 }
 
 bool endGame()
@@ -27,7 +29,11 @@ void expand(bool armed = false)
 {
   if (armed == true)
   {
-    for (int i = 0; i<10; i++)
+    Expansion.set(true);
+
+    Controller2.Screen.setCursor(3, 1);
+    Controller2.Screen.print("Expansion Triggered");
+    /*for (int i = 0; i<10; i++)
     {
       Expansion.set(true);
       wait(100,msec);
@@ -35,7 +41,7 @@ void expand(bool armed = false)
 
       Controller1.Screen.setCursor(2, 1);
       Controller1.Screen.print("Expansion Trigger");
-    }
+    }*/
   }
 }
 
