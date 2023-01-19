@@ -11,6 +11,9 @@ void shoot()//activates piston to push disc into flywheel
   Piston.set(true);
   delay(100);
   Piston.set(false);
+
+  Controller1.Screen.setCursor(1, 1);
+  Controller1.Screen.print("Shot Trigger");
 }
 
 bool endGame()
@@ -29,6 +32,9 @@ void expand(bool armed = false)
       Expansion.set(true);
       wait(100,msec);
       Expansion.set(false);
+
+      Controller1.Screen.setCursor(2, 1);
+      Controller1.Screen.print("Expansion Trigger");
     }
   }
 }

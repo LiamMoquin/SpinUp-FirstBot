@@ -49,6 +49,7 @@ competition Competition;
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+  Controller1.Screen.clearScreen();
   OpticalSensor.setLightPower(200);
   imu.calibrate();
 
@@ -190,7 +191,14 @@ void usercontrol(void) {
     Controller1.ButtonR2.pressed(shoot);//shoots disc when right bumper 2 is pressed
     //Controller1.ButtonDown.pressed(expand(endgame()));
     
-    if(Controller1.ButtonDown.pressing()) expand(endGame());
+    //if(Controller1.ButtonDown.pressing()) expand(endGame());
+    //if(Controller1.ButtonDown.pressing()) Controller1.Screen.print("End Attempt");
+    if(Controller1.ButtonDown.pressing())
+    {
+      expand(Controller2.ButtonDown.pressing());
+      Controller1.Screen.print("End Attempt");
+    }
+    
     
     Controller1.ButtonL1.pressed(rollerSpin);
     Controller1.ButtonL2.pressed(rollerStop);
