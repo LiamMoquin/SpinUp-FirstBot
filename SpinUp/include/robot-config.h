@@ -22,6 +22,7 @@ extern vision Vision20;
 extern triport Expander19;
 extern digital_out Piston;
 extern digital_out Expansion;
+extern digital_out Expansion2;
 extern motor Flywheel;
 extern motor Roller;
 extern motor IntakeLeft;

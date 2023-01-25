@@ -30,6 +30,7 @@ void expand(bool armed = false)
   if (armed == true)
   {
     Expansion.set(true);
+    Expansion2.set(true);
 
     Controller2.Screen.setCursor(3, 1);
     Controller2.Screen.print("Expansion Triggered");
