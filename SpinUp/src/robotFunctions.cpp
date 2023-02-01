@@ -6,17 +6,20 @@ void delay(int milliseconds)
   vex::task::sleep(milliseconds);
 }
 
-int shotCount = 0;
+//int shotCount = 0;
+//int scoreCount = 0;
 void shoot()//activates piston to push disc into flywheel
 {
   Piston.set(true);
   wait(100,msec);
   Piston.set(false);
   
-  shotCount += 1;
-  Controller2.Screen.setCursor(2, 1);
-  Controller2.Screen.print(shotCount/31);
+  //shotCount += 1;
 }
+/*void scoreAdd()
+{
+  scoreCount += 1;
+}*/
 
 bool endGame()
 {
@@ -24,7 +27,6 @@ bool endGame()
 
   else return false;
 }
-
 void expand(bool armed = false)
 {
   if (armed == true)

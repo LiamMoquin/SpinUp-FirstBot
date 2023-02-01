@@ -1,5 +1,4 @@
 using namespace vex;
-
 extern brain Brain;
 
 using signature = vision::signature;

@@ -9,10 +9,10 @@ brain  Brain;
 
 // VEXcode device constructors
 triport Expander19 = triport(PORT19);
-motor frontLeft = motor(PORT2, ratio18_1, false);
-motor rearLeft = motor(PORT5, ratio18_1, false);
-motor frontRight = motor(PORT4, ratio18_1, true);
-motor rearRight = motor(PORT3, ratio18_1, true);
+motor frontLeft = motor(PORT2, ratio18_1, true);
+motor rearLeft = motor(PORT5, ratio18_1, true);
+motor frontRight = motor(PORT4, ratio18_1, false);
+motor rearRight = motor(PORT3, ratio18_1, false);
 controller Controller1 = controller(primary);
 controller Controller2 = controller(partner);
 /*vex-vision-config:begin*/

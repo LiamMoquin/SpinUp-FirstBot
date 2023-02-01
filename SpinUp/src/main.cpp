@@ -209,9 +209,7 @@ void flywheelSlowY()
 
 void usercontrol(void) {
   // User control code here, inside the loop
-  double Ch3 = Controller1.Axis2.position(percent);
-  double Ch4 = Controller1.Axis4.position(percent);
-  double Ch1 = Controller1.Axis1.position(percent);
+  
   //gets axis from controller as percent
 
   Intake.spin(fwd, 12000, voltageUnits::mV);
@@ -263,14 +261,11 @@ void usercontrol(void) {
     Controller1.ButtonL1.pressed(rollerSpin);
     Controller1.ButtonL2.pressed(rollerStop);
 
-    Ch3 = Controller1.Axis2.position(percent);
-    Ch4 = Controller1.Axis4.position(percent);
-    Ch1 = Controller1.Axis1.position(percent);
 
-    frontLeft.setVelocity(Ch3+Ch4+Ch1, percent);
-    rearLeft.setVelocity(Ch3-Ch4+Ch1, percent);
-    frontRight.setVelocity(Ch3-Ch4-Ch1, percent);
-    rearRight.setVelocity(Ch3+Ch4-Ch1, percent);
+    frontLeft.setVelocity((Controller1.Axis2.position(percent) + Controller1.Axis1.position(percent)), percent);
+    rearLeft.setVelocity((Controller1.Axis2.position(percent) + Controller1.Axis1.position(percent)), percent);
+    frontRight.setVelocity((Controller1.Axis2.position(percent) - Controller1.Axis1.position(percent)), percent);
+    rearRight.setVelocity((Controller1.Axis2.position(percent) - Controller1.Axis1.position(percent)), percent);
     //does math for x-drive movement
 
     frontLeft.spin(forward);
@@ -287,7 +282,10 @@ void usercontrol(void) {
     //Brain.Screen.print((FlywheelRear.temperature(celsius)));
     
     Roller.spin(forward, Controller1.Axis3.position(), percent);
-  
+
+    
+    Controller2.Screen.setCursor(2, 1);
+    //Controller2.Screen.print("Shot/Goal: %u \n", shotCount/31, "/", + scoreCount);
     
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
