@@ -4,3 +4,4 @@ using namespace vex;
 
 void visionStrafe(float speed);
 void trigMove(float distx, float disty, float vi, float vf, float rUpDist);
+void driveTime(float seconds, float speed);

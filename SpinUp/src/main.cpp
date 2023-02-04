@@ -26,6 +26,7 @@
 #include "robotFunctions.h"
 #include "autonSelector.h"
 #include "PIDs.h"
+#include "ButtonClass.h"
 
 using namespace vex;
 
@@ -43,12 +44,64 @@ competition Competition;
 /*  function is only called once after the V5 has been powered on and        */
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
-
+int autonSwitch;
 
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
+  Controller2.Screen.clearScreen();
   OpticalSensor.setLightPower(200);
+  imu.calibrate();
+
+  lcdButton Rightside(375,100,100,50,"Right", "#FF2525");
+  lcdButton Leftside(125,100,100,50,"Left", "#FF2525");
+  lcdButton ExpansionButton(250,50,100,50,"Expansion", "#FF2525");
+  lcdButton Nothing(250,200,100,50,"Nothing", "#FF2525");
+  Brain.Screen.setCursor(1, 1);
+
+  while(true)
+  {
+    if(Leftside.pressing())
+    {
+      Brain.Screen.clearScreen();
+      Brain.Screen.setCursor(1, 1);
+      Brain.Screen.print("Left Selected");
+      autonSwitch = 0;
+      break;
+    }
+
+    if(Rightside.pressing())
+    {
+      Brain.Screen.clearScreen();
+      Brain.Screen.setCursor(1, 1);
+      Brain.Screen.print("Right Selected");
+      autonSwitch = 1;
+      break;
+    }
+
+    if(ExpansionButton.pressing())
+    {
+      Brain.Screen.clearScreen();
+      Brain.Screen.setCursor(1, 1);
+      Brain.Screen.print("Expansion Selected");
+      autonSwitch = 2;
+      break;
+    }
+    
+    if(Nothing.pressing())
+    {
+      Brain.Screen.clearScreen();
+      break;
+    }
+  }
+
+  /*while(1 != !1)
+  {
+    if(Leftside.pressing())
+    {
+      Brain.Screen.print("Left has been selected");
+    }
+  }*/
 
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
@@ -64,10 +117,62 @@ void pre_auton(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-
+void rollerSpin()
+{
+  Roller.setVelocity(30, percent);
+  Roller.spin(reverse);
+}
+void rollerStop()
+{
+  Roller.stop();
+}
 
 void autonomous(void) {
-  driveStraighti(24, 10, 100, 0.4);
+
+  if(autonSwitch == 0)
+  {
+    //PUT ANYTHING YOU WANT FOR THE LEFT SIDE HERE
+  }
+
+  //left side auton
+  /*rollerSpin();
+  driveTime(1, 50);
+  wait(.2, sec);
+  rollerStop();*/
+  
+
+  
+
+  /*driveTime(1, 50);
+  rollerSpin();
+  wait(.75, sec);
+  rollerStop();*/
+
+  /*while (imu.heading() >= 225)
+  {
+    frontLeft.spin(reverse, 30, percent);
+    rearLeft.spin(reverse, 30, percent);
+    frontRight.spin(fwd, 30, percent);
+    rearRight.spin(fwd, 30, percent);
+  }*/
+
+  //right side auton good
+  if(autonSwitch == 1)
+  {
+    Flywheel.spin(fwd, 12000*.8, voltageUnits::mV);
+    wait(4, sec);
+    shoot();
+    wait(500, msec);
+    shoot();
+  }
+
+  //EXPANSION CODE
+  if(autonSwitch == 2)
+  {
+    expand(true);
+  }
+
+  //driveStraighti(24, 10, 100, 0.2);
   //driveStraightc(0.8);
   //driveStraightf(0, 1);
   //trigMove(35, 30, 0, 70, .2);
@@ -87,34 +192,78 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void rollerSpin()
+float flywheelState = 12000;
+
+void flywheelSlowA()
 {
-  Roller.setVelocity(100, percent);
-  Roller.spin(forward);
+  flywheelState = 0;
 }
-void rollerStop()
+void flywheelSlowB()
 {
-  Roller.stop();
+  flywheelState = 12000 * .8;
 }
+void flywheelSlowY()
+{
+  flywheelState = 12000;
+}
+
 void usercontrol(void) {
   // User control code here, inside the loop
-  double Ch3 = Controller1.Axis3.position(percent);
+  double Ch3 = Controller1.Axis2.position(percent);
   double Ch4 = Controller1.Axis4.position(percent);
   double Ch1 = Controller1.Axis1.position(percent);
   //gets axis from controller as percent
 
-  while (true) {
+  Intake.spin(fwd, 12000, voltageUnits::mV);
 
-    Flywheel.spin(fwd, 12000, voltageUnits::mV); //spins flywheel at top speed
+  Brain.resetTimer();
+  Controller2.Screen.clearScreen();
+  Brain.Screen.clearScreen();
+  Controller2.Screen.setCursor(1,1);
+  Controller2.Screen.print("Shots Triggers:");
+  
+
+  while (true) {
+    if(Controller1.ButtonA.pressing())
+    {
+      flywheelSlowA();
+    }
+    if(Controller1.ButtonB.pressing())
+    {
+      flywheelSlowB();
+    }
+    if(Controller1.ButtonY.pressing())
+    {
+      flywheelSlowY();
+    }
+    Flywheel.spin(fwd, flywheelState, voltageUnits::mV); //spins flywheel at top speed
     tempCheck();
-    Intake.spin(fwd, 12000, voltageUnits::mV);
+
+    if(Controller1.ButtonL1.pressing())
+    {
+      Intake.spin(fwd, 12000, voltageUnits::mV);
+    }
+    if(Controller1.ButtonL2.pressing())
+    {
+      Intake.stop();
+    }
 
     Controller1.ButtonR2.pressed(shoot);//shoots disc when right bumper 2 is pressed
+    //Controller1.ButtonDown.pressed(expand(endgame()));
+    
+    //if(Controller1.ButtonDown.pressing()) expand(endGame());
+    //if(Controller1.ButtonDown.pressing()) Controller1.Screen.print("End Attempt");
+    if(Controller1.ButtonDown.pressing())
+    {
+      expand(Controller2.ButtonDown.pressing());
+      Controller1.Screen.print("End Attempt");
+    }
+    
     
     Controller1.ButtonL1.pressed(rollerSpin);
     Controller1.ButtonL2.pressed(rollerStop);
 
-    Ch3 = Controller1.Axis3.position(percent);
+    Ch3 = Controller1.Axis2.position(percent);
     Ch4 = Controller1.Axis4.position(percent);
     Ch1 = Controller1.Axis1.position(percent);
 
@@ -137,13 +286,15 @@ void usercontrol(void) {
     //Brain.Screen.setCursor(8,1);
     //Brain.Screen.print((FlywheelRear.temperature(celsius)));
     
-    
+    Roller.spin(forward, Controller1.Axis3.position(), percent);
   
     
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.
   }
 }
+
+bool isEvil = false;
 
 //
 // Main will set up the competition functions and callbacks.
@@ -158,6 +309,14 @@ int main() {
 
   // Prevent main from exiting with an infinite loop.
   while (true) {
+    if(isEvil)
+    {
+      Brain.Screen.setFillColor(red);
+    }
+    else
+    {
+      Brain.Screen.setFillColor(blue);
+    }
     wait(100, msec);
   }
 }

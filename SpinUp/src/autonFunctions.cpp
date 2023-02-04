@@ -5,6 +5,31 @@
 
 using namespace vex;
 
+//shitty code section
+void driveTime(float seconds, float speed)
+{
+  frontLeft.setVelocity(speed, percent);
+  rearLeft.setVelocity(speed, percent);
+  frontRight.setVelocity(speed, percent);
+  rearRight.setVelocity(speed, percent);
+
+  frontLeft.spin(forward);
+  rearLeft.spin(forward);
+  frontRight.spin(forward);
+  rearRight.spin(forward);
+
+  wait(seconds, sec);
+
+  frontLeft.stop();
+  rearLeft.stop();
+  frontRight.stop();
+  rearRight.stop();
+}
+
+
+//end of shitty code (ish)
+
+
 void allspin(void) //sets motors to spin at whatever velocity has been previously set
 {
   frontLeft.spin(forward);

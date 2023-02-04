@@ -6,11 +6,44 @@ void delay(int milliseconds)
   vex::task::sleep(milliseconds);
 }
 
+int shotCount = 0;
 void shoot()//activates piston to push disc into flywheel
 {
-  Piston.set(false);
-  delay(100);
   Piston.set(true);
+  wait(100,msec);
+  Piston.set(false);
+  
+  shotCount += 1;
+  Controller2.Screen.setCursor(2, 1);
+  Controller2.Screen.print(shotCount/31);
+}
+
+bool endGame()
+{
+  if ((60 - Brain.timer(seconds) >= 10) && Controller2.ButtonDown.pressing()) return true;
+
+  else return false;
+}
+
+void expand(bool armed = false)
+{
+  if (armed == true)
+  {
+    Expansion.set(true);
+    Expansion2.set(true);
+
+    Controller2.Screen.setCursor(3, 1);
+    Controller2.Screen.print("Expansion Triggered");
+    /*for (int i = 0; i<10; i++)
+    {
+      Expansion.set(true);
+      wait(100,msec);
+      Expansion.set(false);
+
+      Controller1.Screen.setCursor(2, 1);
+      Controller1.Screen.print("Expansion Trigger");
+    }*/
+  }
 }
 
 void tempCheck()//warns if temperature is too high
@@ -47,20 +80,15 @@ void tempCheck()//warns if temperature is too high
 
 void rollerScore()
 {
-  Roller.setVelocity(90, percent);
+  Roller.setVelocity(30, percent);
   Roller.spin(forward);
-  /*int aHue = OpticalSensor.hue();
-  printf("%i",aHue);
-  while(aHue >= 50)
+  while(OpticalSensor.color() == red)
   {
-    Roller.setVelocity(100, percent);
     Roller.spin(forward);
-    aHue = OpticalSensor.hue();
   }
-  while(aHue <= 50)
+  while(OpticalSensor.color() == blue)
   {
-    delay(50);
+    wait(50, msec);
     Roller.stop();
-    aHue = OpticalSensor.hue();
-  }*/
+  }
 }
