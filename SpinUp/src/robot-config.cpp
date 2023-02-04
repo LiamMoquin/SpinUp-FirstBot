@@ -9,10 +9,10 @@ brain  Brain;
 
 // VEXcode device constructors
 triport Expander19 = triport(PORT19);
-motor frontLeft = motor(PORT2, ratio18_1, false);
-motor rearLeft = motor(PORT5, ratio18_1, false);
-motor frontRight = motor(PORT4, ratio18_1, true);
-motor rearRight = motor(PORT3, ratio18_1, true);
+motor frontLeft = motor(PORT2, ratio18_1, true);
+motor rearLeft = motor(PORT5, ratio18_1, true);
+motor frontRight = motor(PORT4, ratio18_1, false);
+motor rearRight = motor(PORT3, ratio18_1, false);
 controller Controller1 = controller(primary);
 controller Controller2 = controller(partner);
 /*vex-vision-config:begin*/
@@ -27,7 +27,7 @@ vision Vision20 = vision (PORT20, 35, Vision20__SIG_1, Vision20__SIG_2, Vision20
 /*vex-vision-config:end*/
 digital_out Piston = digital_out(Brain.ThreeWirePort.A);
 digital_out Expansion = digital_out(Brain.ThreeWirePort.B);
-digital_out Expansion2 = digital_out(Brain.ThreeWirePort.C);
+digital_out Expansion2 = digital_out(Brain.ThreeWirePort.H);
 motor Flywheel = motor(PORT7, ratio6_1, true);
 motor Roller = motor(PORT9, ratio6_1, false);
 motor IntakeLeft = motor(PORT6, ratio6_1, true);

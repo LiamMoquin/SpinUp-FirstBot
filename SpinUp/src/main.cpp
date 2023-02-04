@@ -129,9 +129,47 @@ void rollerStop()
 
 void autonomous(void) {
 
+  //left side auton
   if(autonSwitch == 0)
   {
-    //PUT ANYTHING YOU WANT FOR THE LEFT SIDE HERE
+    Flywheel.spin(fwd, 12000*.5, voltageUnits::mV);
+    driveTime(.2, 100);
+    rollerSpin();
+    wait(500, msec);
+    rollerStop();
+    driveTime(.1, -50);
+
+    frontLeft.spin(forward, 50, percent);
+    rearLeft.spin(forward,50,percent);
+    frontRight.spin(reverse, 50, percent);
+    rearRight.spin(reverse, 50, percent);
+    wait(425,msec);
+    frontRight.stop();
+    rearRight.stop();
+    frontLeft.stop();
+    rearLeft.stop();
+
+    driveTime(1, -75);
+    frontLeft.spin(fwd, 50, percent);
+    rearLeft.spin(fwd, 50, percent);
+    wait(425, msec);
+    frontLeft.stop();
+    rearLeft.stop();
+    wait(500, msec);
+    shoot();
+    wait(1000, msec);
+    shoot();
+
+    /*
+    frontLeft.spin(reverse, 50, percent);
+    rearLeft.spin(reverse,50,percent);
+    frontRight.spin(forward, 50, percent);
+    rearRight.spin(forward, 50, percent);
+    wait(425,msec);
+    frontRight.stop();
+    rearRight.stop();
+    frontLeft.stop();
+    rearLeft.stop();*/
   }
 
   //left side auton
@@ -209,10 +247,6 @@ void flywheelSlowY()
 
 void usercontrol(void) {
   // User control code here, inside the loop
-  double Ch3 = Controller1.Axis2.position(percent);
-  double Ch4 = Controller1.Axis4.position(percent);
-  double Ch1 = Controller1.Axis1.position(percent);
-  //gets axis from controller as percent
 
   Intake.spin(fwd, 12000, voltageUnits::mV);
 
@@ -263,21 +297,11 @@ void usercontrol(void) {
     Controller1.ButtonL1.pressed(rollerSpin);
     Controller1.ButtonL2.pressed(rollerStop);
 
-    Ch3 = Controller1.Axis2.position(percent);
-    Ch4 = Controller1.Axis4.position(percent);
-    Ch1 = Controller1.Axis1.position(percent);
 
-    frontLeft.setVelocity(Ch3+Ch4+Ch1, percent);
-    rearLeft.setVelocity(Ch3-Ch4+Ch1, percent);
-    frontRight.setVelocity(Ch3-Ch4-Ch1, percent);
-    rearRight.setVelocity(Ch3+Ch4-Ch1, percent);
-    //does math for x-drive movement
-
-    frontLeft.spin(forward);
-    rearLeft.spin(forward);
-    frontRight.spin(forward);
-    rearRight.spin(forward);
-    //spins wheels
+    frontLeft.spin(fwd, (Controller1.Axis2.value() + Controller1.Axis1.value()), vex::velocityUnits::pct);
+    rearLeft.spin(fwd, (Controller1.Axis2.value() + Controller1.Axis1.value()), vex::velocityUnits::pct);
+    frontRight.spin(fwd, (Controller1.Axis2.value() - Controller1.Axis1.value()), vex::velocityUnits::pct);
+    rearRight.spin(fwd, (Controller1.Axis2.value() - Controller1.Axis1.value()), vex::velocityUnits::pct);
 
     Brain.Screen.setCursor(5,1);
     Brain.Screen.print((Flywheel.velocity(rpm) * 6));//prints fhlywheel rpm
