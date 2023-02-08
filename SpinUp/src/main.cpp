@@ -129,9 +129,47 @@ void rollerStop()
 
 void autonomous(void) {
 
+  //left side auton
   if(autonSwitch == 0)
   {
-    //PUT ANYTHING YOU WANT FOR THE LEFT SIDE HERE
+    Flywheel.spin(fwd, 12000*.5, voltageUnits::mV);
+    driveTime(.2, 100);
+    rollerSpin();
+    wait(500, msec);
+    rollerStop();
+    driveTime(.1, -50);
+
+    frontLeft.spin(forward, 50, percent);
+    rearLeft.spin(forward,50,percent);
+    frontRight.spin(reverse, 50, percent);
+    rearRight.spin(reverse, 50, percent);
+    wait(425,msec);
+    frontRight.stop();
+    rearRight.stop();
+    frontLeft.stop();
+    rearLeft.stop();
+
+    driveTime(1, -75);
+    frontLeft.spin(fwd, 50, percent);
+    rearLeft.spin(fwd, 50, percent);
+    wait(425, msec);
+    frontLeft.stop();
+    rearLeft.stop();
+    wait(500, msec);
+    shoot();
+    wait(1000, msec);
+    shoot();
+
+    /*
+    frontLeft.spin(reverse, 50, percent);
+    rearLeft.spin(reverse,50,percent);
+    frontRight.spin(forward, 50, percent);
+    rearRight.spin(forward, 50, percent);
+    wait(425,msec);
+    frontRight.stop();
+    rearRight.stop();
+    frontLeft.stop();
+    rearLeft.stop();*/
   }
 
   //left side auton
@@ -209,8 +247,6 @@ void flywheelSlowY()
 
 void usercontrol(void) {
   // User control code here, inside the loop
-  
-  //gets axis from controller as percent
 
   Intake.spin(fwd, 12000, voltageUnits::mV);
 
@@ -262,17 +298,10 @@ void usercontrol(void) {
     Controller1.ButtonL2.pressed(rollerStop);
 
 
-    frontLeft.setVelocity((Controller1.Axis2.position(percent) + Controller1.Axis1.position(percent)), percent);
-    rearLeft.setVelocity((Controller1.Axis2.position(percent) + Controller1.Axis1.position(percent)), percent);
-    frontRight.setVelocity((Controller1.Axis2.position(percent) - Controller1.Axis1.position(percent)), percent);
-    rearRight.setVelocity((Controller1.Axis2.position(percent) - Controller1.Axis1.position(percent)), percent);
-    //does math for x-drive movement
-
-    frontLeft.spin(forward);
-    rearLeft.spin(forward);
-    frontRight.spin(forward);
-    rearRight.spin(forward);
-    //spins wheels
+    frontLeft.spin(fwd, (Controller1.Axis2.value() + Controller1.Axis1.value()), vex::velocityUnits::pct);
+    rearLeft.spin(fwd, (Controller1.Axis2.value() + Controller1.Axis1.value()), vex::velocityUnits::pct);
+    frontRight.spin(fwd, (Controller1.Axis2.value() - Controller1.Axis1.value()), vex::velocityUnits::pct);
+    rearRight.spin(fwd, (Controller1.Axis2.value() - Controller1.Axis1.value()), vex::velocityUnits::pct);
 
     Brain.Screen.setCursor(5,1);
     Brain.Screen.print((Flywheel.velocity(rpm) * 6));//prints fhlywheel rpm
@@ -282,10 +311,7 @@ void usercontrol(void) {
     //Brain.Screen.print((FlywheelRear.temperature(celsius)));
     
     Roller.spin(forward, Controller1.Axis3.position(), percent);
-
-    
-    Controller2.Screen.setCursor(2, 1);
-    //Controller2.Screen.print("Shot/Goal: %u \n", shotCount/31, "/", + scoreCount);
+  
     
     wait(20, msec); // Sleep the task for a short amount of time to
                     // prevent wasted resources.

@@ -27,6 +27,7 @@ vision Vision20 = vision (PORT20, 35, Vision20__SIG_1, Vision20__SIG_2, Vision20
 /*vex-vision-config:end*/
 digital_out Piston = digital_out(Brain.ThreeWirePort.A);
 digital_out Expansion = digital_out(Brain.ThreeWirePort.B);
+digital_out Expansion2 = digital_out(Brain.ThreeWirePort.H);
 motor Flywheel = motor(PORT7, ratio6_1, true);
 motor Roller = motor(PORT9, ratio6_1, false);
 motor IntakeLeft = motor(PORT6, ratio6_1, true);
