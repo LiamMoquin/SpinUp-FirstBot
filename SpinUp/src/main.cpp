@@ -56,7 +56,7 @@ void pre_auton(void) {
   lcdButton Rightside(375,100,100,50,"Right", "#FF2525");
   lcdButton Leftside(125,100,100,50,"Left", "#FF2525");
   lcdButton ExpansionButton(250,50,100,50,"Expansion", "#FF2525");
-  lcdButton Nothing(250,200,100,50,"Nothing", "#FF2525");
+  lcdButton PIDTest(250,200,100,50,"PIDTest", "#FF2525");
   Brain.Screen.setCursor(1, 1);
 
   while(true)
@@ -88,9 +88,12 @@ void pre_auton(void) {
       break;
     }
     
-    if(Nothing.pressing())
+    if(PIDTest.pressing())
     {
       Brain.Screen.clearScreen();
+      Brain.Screen.setCursor(1,1);
+      Brain.Screen.print("PID Test Selected");
+      autonSwitch = 3;
       break;
     }
   }
@@ -208,6 +211,11 @@ void autonomous(void) {
   if(autonSwitch == 2)
   {
     expand(true);
+  }
+
+  if(autonSwitch == 3)
+  {
+    turnPD(90, 40);
   }
 
   //driveStraighti(24, 10, 100, 0.2);

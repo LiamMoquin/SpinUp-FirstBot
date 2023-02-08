@@ -34,15 +34,12 @@ void driveStraighti(float dist/*target dist (in)*/, float vi = 0/*initial veloci
   error = 0; //sets error to 0
   lastError = 0; //sets lastError to 0
   
-  totalTargetDeg = (dist / (2 * M_PI * (2.75/2)) * 360) * 2;
+  totalTargetDeg = (dist / (2 * M_PI * (wheelDiameter / 2) / gearRatio) * 360);
   //Brain.Screen.print(totalTargetDeg);
   /*Target distance in degrees explanation:
   "dist" is the target in inches
-  "(2 * M_PI * (2.75/2))"" is the calculation to find the circumference of the wheels
-  "* 360" converts the distance and circumferance to degrees
-  "* 2" is to double the degrees the motors need to spin
-  We double the target degrees because the wheels are at a 45 degree angle and
-  that halves distance traveled (they're all traveling diagonally so doubling accounts for that)*/
+  "(2 * M_PI * (wheelDiameter/2))"" is the calculation to find the circumference of the wheels
+  "* 360" converts the distance and circumferance to degrees*/
 
   float targetDeg = (totalTargetDeg * rUpDist);//Sets target degrees for this specific instantiation
   /*Brain.Screen.setCursor(1, 1);
@@ -165,29 +162,13 @@ void turnPD(float targetHead, float vt)
   float error = targetHead - imu.heading();
   float lastError = 0;
 
-  while ((imu.heading() <= error + errorRange) && (error <= 180))
+  while (imu.heading() <= targetHead + errorRange)
   {
     float targetVel = (error * tkP + (error - lastError) * tkD + error + vt);
     frontLeft.setVelocity(-targetVel, percent);
     rearLeft.setVelocity(-targetVel, percent);
     frontRight.setVelocity(targetVel, percent);
     rearRight.setVelocity(targetVel, percent);
-
-    frontLeft.spin(fwd);
-    rearLeft.spin(fwd);
-    frontRight.spin(fwd);
-    rearRight.spin(fwd);
-
-    lastError = error;
-  }
-
-    while ((imu.heading() >= error - errorRange) && (error > 180))
-  {
-    float targetVel = (error * tkP + (error - lastError) * tkD + error + vt);
-    frontLeft.setVelocity(targetVel, percent);
-    rearLeft.setVelocity(targetVel, percent);
-    frontRight.setVelocity(-targetVel, percent);
-    rearRight.setVelocity(-targetVel, percent);
 
     frontLeft.spin(fwd);
     rearLeft.spin(fwd);

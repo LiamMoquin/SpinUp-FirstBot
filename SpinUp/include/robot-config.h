@@ -1,3 +1,4 @@
+#pragma once
 using namespace vex;
 extern brain Brain;
 
@@ -30,6 +31,9 @@ extern motor_group Intake;
 extern optical OpticalSensor;
 extern inertial imu;
 
+
+extern float wheelDiameter;
+extern float gearRatio;
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.
  * 

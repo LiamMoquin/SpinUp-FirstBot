@@ -37,6 +37,10 @@ motor_group Intake = motor_group(IntakeLeft, IntakeRight);
 optical OpticalSensor = optical(PORT7, false);
 inertial imu = inertial(PORT18);
 
+float wheelDiameter = 4.0;
+float gearRatio = 84/60;
+
+
 // VEXcode generated functions
 // define variable for remote controller enable/disable
 bool RemoteControlCodeEnabled = true;
