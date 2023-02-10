@@ -153,28 +153,55 @@ void driveStraightf(float vf, float endDistPerc)
 
 //Turn PDs
 
-float tkP = 1.6; //proportional tuning value
-float tkD = 0; //derivative tuning value
-float errorRange = 1; //acceptable error range
+float tkP = 10; //proportional tuning value
+float tkD = 5; //derivative tuning value
+float errorRange = 5; //acceptable error range
 
-void turnPD(float targetHead, float vt)
+void turnPD(float targetHead)
 {
   float error = targetHead - imu.heading();
-  float lastError = 0;
+  float lastError = targetHead;
 
-  while (imu.heading() <= targetHead + errorRange)
+  while (!(imu.heading() >= (targetHead - errorRange) && imu.heading() <= (targetHead + errorRange)))
   {
-    float targetVel = (error * tkP + (error - lastError) * tkD + error + vt);
-    frontLeft.setVelocity(-targetVel, percent);
-    rearLeft.setVelocity(-targetVel, percent);
-    frontRight.setVelocity(targetVel, percent);
-    rearRight.setVelocity(targetVel, percent);
+  //
+    error = targetHead - imu.heading();
+    float targetVel = (error * tkP + (error - lastError) * tkD + error + 40)/100;
 
-    frontLeft.spin(fwd);
-    rearLeft.spin(fwd);
-    frontRight.spin(fwd);
-    rearRight.spin(fwd);
+    while(targetVel < 0)
+    {
+      error = targetHead - imu.heading();
+      targetVel = (error * tkP + (error - lastError) * tkD + error + 40)/100;
+      frontLeft.spin(reverse, targetVel, percent);
+      rearLeft.spin(reverse, targetVel, percent);
+      frontRight.spin(fwd, targetVel, percent);
+      rearRight.spin(fwd, targetVel, percent);
 
-    lastError = error;
+      lastError = error;
+      Brain.Screen.setCursor(3, 1);
+      Brain.Screen.print(error);
+      Brain.Screen.setCursor(2,1);
+      Brain.Screen.print(imu.heading());
+    }
+    while (targetVel > 0)
+    {
+      error = targetHead - imu.heading();
+      targetVel = (error * tkP + (error - lastError) * tkD + error + 40)/100;
+      frontLeft.spin(fwd, targetVel, percent);
+      rearLeft.spin(fwd, targetVel, percent);
+      frontRight.spin(reverse, targetVel, percent);
+      rearRight.spin(reverse, targetVel, percent);
+
+      lastError = error;
+      Brain.Screen.setCursor(3, 1);
+      Brain.Screen.print(error);
+      Brain.Screen.setCursor(2,1);
+      Brain.Screen.print(imu.heading());
+    }
+    wait(5, msec);
   }
+  frontLeft.stop();
+  rearLeft.stop();
+  frontRight.stop();
+  rearRight.stop();
 }

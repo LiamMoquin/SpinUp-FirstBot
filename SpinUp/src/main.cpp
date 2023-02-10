@@ -52,6 +52,15 @@ void pre_auton(void) {
   Controller2.Screen.clearScreen();
   OpticalSensor.setLightPower(200);
   imu.calibrate();
+  while(imu.isCalibrating())
+  {
+    Brain.Screen.setCursor(3, 1);
+    Brain.Screen.print("Calibrating");
+  }
+  Brain.Screen.print("Complete");
+  wait(3, sec);
+  Brain.Screen.clearScreen();
+  imu.setHeading(0, degrees);
 
   lcdButton Rightside(375,100,100,50,"Right", "#FF2525");
   lcdButton Leftside(125,100,100,50,"Left", "#FF2525");
@@ -131,6 +140,7 @@ void rollerStop()
 }
 
 void autonomous(void) {
+  Brain.Screen.clearScreen();
 
   //left side auton
   if(autonSwitch == 0)
@@ -215,7 +225,18 @@ void autonomous(void) {
 
   if(autonSwitch == 3)
   {
-    turnPD(90, 40);
+    /*while(imu.heading() != (90 + 5) || (90 - 5))
+    {
+      frontLeft.spin(fwd, 50, percent);
+      rearLeft.spin(fwd, 50, percent);
+      frontRight.spin(reverse, 50, percent);
+      rearRight.spin(reverse, 50, percent);
+    }*/
+    turnPD(90);
+    turnPD(0);
+    turnPD(270);
+    turnPD(0);
+    turnPD(180);
   }
 
   //driveStraighti(24, 10, 100, 0.2);

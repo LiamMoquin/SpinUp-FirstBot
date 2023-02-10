@@ -101,7 +101,7 @@ void trigMove(float distx, float disty, float vi, float vf, float rUpDist)
   float angleCalc = atan(distx/disty);
   float distCalc = sqrt(pow(distx,2) + pow(disty,2));
 
-  turnPD(angleCalc, 40);
+  turnPD(angleCalc);
   driveStraighti(distCalc, vi, vf, rUpDist);
   driveStraightc(1-rUpDist);
   driveStraightf(0, rUpDist);
