@@ -168,7 +168,7 @@ void turnPD(float targetHead)
     error = targetHead - imu.heading();
     float targetVel = (error * tkP + (error - lastError) * tkD + error + 40)/100;
 
-    while(targetVel < 0)
+    if(targetVel < 0)//if used to be while
     {
       error = targetHead - imu.heading();
       targetVel = (error * tkP + (error - lastError) * tkD + error + 40)/100;
@@ -183,7 +183,7 @@ void turnPD(float targetHead)
       Brain.Screen.setCursor(2,1);
       Brain.Screen.print(imu.heading());
     }
-    while (targetVel > 0)
+    if (targetVel > 0)//if used to be while
     {
       error = targetHead - imu.heading();
       targetVel = (error * tkP + (error - lastError) * tkD + error + 40)/100;
