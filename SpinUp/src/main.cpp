@@ -264,24 +264,18 @@ void autonomous(void) {
     expand(true);
   }
 
-  if(autonSwitch == 3)
+  if(autonSwitch == 3)//pidTest
   {
-    /*while(imu.heading() != (90 + 5) || (90 - 5))
-    {
-      frontLeft.spin(fwd, 50, percent);
-      rearLeft.spin(fwd, 50, percent);
-      frontRight.spin(reverse, 50, percent);
-      rearRight.spin(reverse, 50, percent);
-    }*/
-    turnPD(270);
-    /*wait(2, sec);
-    turnPD(0);
-    wait(2, sec);
-    turnPD(270);
-    wait(2, sec);
-    turnPD(0);
-    wait(2, sec);
-    turnPD(180);*/
+    Flywheel.spin(fwd, 12000*.5, voltageUnits::mV);
+    driveTime(.2, 100);
+    rollerSpin();
+    wait(500, msec);
+    rollerStop();
+    driveTime(.1, -50);
+    turnPD(180+45);
+
+    driveTime(1.7, 50);
+
   }
 
   //driveStraighti(24, 10, 100, 0.2);

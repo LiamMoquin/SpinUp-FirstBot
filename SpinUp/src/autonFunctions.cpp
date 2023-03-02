@@ -25,6 +25,18 @@ void driveTime(float seconds, float speed)
   frontRight.stop();
   rearRight.stop();
 }
+void driveInches(float dist, float speed)
+{
+  frontLeft.setVelocity(speed, percent);
+  rearLeft.setVelocity(speed, percent);
+  frontRight.setVelocity(speed, percent);
+  rearRight.setVelocity(speed, percent);
+
+  frontLeft.spinFor(dist/wheelDiameter, rev);
+  rearLeft.spinFor(dist/wheelDiameter, rev);
+  frontRight.spinFor(dist/wheelDiameter, rev);
+  rearRight.spinFor(dist/wheelDiameter, rev);
+}
 
 
 //end of shitty code (ish)
