@@ -105,6 +105,14 @@ void pre_auton(void) {
       autonSwitch = 3;
       break;
     }
+    if(Controller1.ButtonLeft.pressing())
+    {
+      Brain.Screen.clearScreen();
+      Brain.Screen.setCursor(1,1);
+      Brain.Screen.print("PID Test Selected");
+      autonSwitch = 3;
+      break;
+    }
   }
 
   /*while(1 != !1)
@@ -265,11 +273,15 @@ void autonomous(void) {
       frontRight.spin(reverse, 50, percent);
       rearRight.spin(reverse, 50, percent);
     }*/
-    turnPD(90);
-    turnPD(0);
     turnPD(270);
+    /*wait(2, sec);
     turnPD(0);
-    turnPD(180);
+    wait(2, sec);
+    turnPD(270);
+    wait(2, sec);
+    turnPD(0);
+    wait(2, sec);
+    turnPD(180);*/
   }
 
   //driveStraighti(24, 10, 100, 0.2);

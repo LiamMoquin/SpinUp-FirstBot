@@ -155,7 +155,7 @@ void driveStraightf(float vf, float endDistPerc)
 
 float tkP = 10; //proportional tuning value
 float tkD = 5; //derivative tuning value
-float errorRange = 5; //acceptable error range
+float errorRange = 2; //acceptable error range
 
 void turnPD(float targetHead)
 {
@@ -168,7 +168,7 @@ void turnPD(float targetHead)
     error = targetHead - imu.heading();
     float targetVel = (error * tkP + (error - lastError) * tkD + error + 40)/100;
 
-    if(targetVel < 0)//if used to be while
+    if(error < 180)//if used to be while
     {
       error = targetHead - imu.heading();
       targetVel = (error * tkP + (error - lastError) * tkD + error + 40)/100;
