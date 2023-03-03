@@ -109,7 +109,7 @@ int flywheelP()
   while(true)
   {
     error = targetVel - Flywheel.velocity(rpm)*6;
-    Flywheel.spin(fwd, ((error * fkP) /*+ targetVel*/), pct);
+    Flywheel.spin(fwd, (error * fkP) /*+ targetVel)*/, pct);
     wait(5,msec);
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(1,1);
