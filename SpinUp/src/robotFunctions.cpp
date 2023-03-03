@@ -94,3 +94,26 @@ void rollerScore()
     Roller.stop();
   }
 }
+
+int targetVel;
+
+void setFly(int target){
+  targetVel = target;
+}
+
+int flywheelP()
+{
+  float fkP = .2;
+
+  float error = targetVel - Flywheel.velocity(rpm)*6;
+  while(true)
+  {
+    error = targetVel - Flywheel.velocity(rpm)*6;
+    Flywheel.spin(fwd, ((error * fkP) /*+ targetVel*/), pct);
+    wait(5,msec);
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(1,1);
+    Brain.Screen.print(Flywheel.velocity(rpm)*6);
+  }
+  return 0;
+}

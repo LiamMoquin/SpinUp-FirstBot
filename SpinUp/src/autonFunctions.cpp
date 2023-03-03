@@ -32,10 +32,10 @@ void driveInches(float dist, float speed)
   frontRight.setVelocity(speed, percent);
   rearRight.setVelocity(speed, percent);
 
-  frontLeft.spinFor(dist/wheelDiameter, rev);
-  rearLeft.spinFor(dist/wheelDiameter, rev);
-  frontRight.spinFor(dist/wheelDiameter, rev);
-  rearRight.spinFor(dist/wheelDiameter, rev);
+  frontLeft.spinFor(forward, dist/wheelDiameter*M_PI*360*gearRatio, degrees, false);
+  rearLeft.spinFor(forward, dist/wheelDiameter*M_PI*360*gearRatio, degrees, false);
+  frontRight.spinFor(forward, dist/wheelDiameter*M_PI*360*gearRatio, degrees, false);
+  rearRight.spinFor(forward, dist/wheelDiameter*M_PI*360*gearRatio, degrees, false);
 }
 
 

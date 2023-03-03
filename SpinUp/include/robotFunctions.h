@@ -10,3 +10,5 @@ void tempCheck(void);
 void rollerScore();
 void expand(bool armed);
 bool endGame(void);
+void setFly(int target);
+int flywheelP();

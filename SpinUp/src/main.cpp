@@ -57,8 +57,8 @@ void pre_auton(void) {
     Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Calibrating");
   }
+  wait(2, sec);
   Brain.Screen.print("Complete");
-  wait(3, sec);
   Brain.Screen.clearScreen();
   imu.setHeading(0, degrees);
 
@@ -149,6 +149,7 @@ void rollerStop()
 
 void autonomous(void) {
   Brain.Screen.clearScreen();
+  task FlywheelT = task(flywheelP);
 
   //left side auton
   if(autonSwitch == 0)
@@ -266,15 +267,31 @@ void autonomous(void) {
 
   if(autonSwitch == 3)//pidTest
   {
-    Flywheel.spin(fwd, 12000*.5, voltageUnits::mV);
+    setFly(3000);
+
+    /*imu.setHeading(180, degrees);
+    frontLeft.setStopping(brake);
+    rearLeft.setStopping(brake);
+    frontRight.setStopping(brake);
+    rearRight.setStopping(brake);
+    
+    Intake.spin(reverse, 12000, voltageUnits::mV);
     driveTime(.2, 100);
     rollerSpin();
     wait(500, msec);
     rollerStop();
     driveTime(.1, -50);
-    turnPD(180+45);
+    turnPD(40);
 
-    driveTime(1.7, 50);
+    driveTime(2.2, 50);
+
+    turnPD(90+55);
+    wait(1, sec);
+    shoot();
+    wait(3, sec);
+    shoot();
+    wait(1,sec);
+    shoot();*/
 
   }
 
@@ -298,7 +315,7 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-float flywheelState = 12000;
+int flywheelState = 3600;
 
 void flywheelSlowA()
 {
@@ -306,14 +323,15 @@ void flywheelSlowA()
 }
 void flywheelSlowB()
 {
-  flywheelState = 12000 * .8;
+  flywheelState = 3600 * .8;
 }
 void flywheelSlowY()
 {
-  flywheelState = 12000;
+  flywheelState = 3600;
 }
 
 void usercontrol(void) {
+
   // User control code here, inside the loop
 
   Intake.spin(fwd, 12000, voltageUnits::mV);
@@ -338,7 +356,8 @@ void usercontrol(void) {
     {
       flywheelSlowY();
     }
-    Flywheel.spin(fwd, flywheelState, voltageUnits::mV); //spins flywheel at top speed
+    setFly(flywheelState);
+    //Flywheel.spin(fwd, flywheelState, voltageUnits::mV); //spins flywheel at top speed
     tempCheck();
 
     if(Controller1.ButtonL1.pressing())
@@ -392,6 +411,7 @@ bool isEvil = false;
 // Main will set up the competition functions and callbacks.
 //
 int main() {
+
   // Set up callbacks for autonomous and driver control periods.
   Competition.autonomous(autonomous);
   Competition.drivercontrol(usercontrol);
