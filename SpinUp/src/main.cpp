@@ -44,20 +44,20 @@ competition Competition;
 /*  function is only called once after the V5 has been powered on and        */
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
-int autonSwitch;
+int autonSwitch = 3;
 
 void pre_auton(void) {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   Controller2.Screen.clearScreen();
   OpticalSensor.setLightPower(200);
-  imu.calibrate();
+  /*imu.calibrate();
   while(imu.isCalibrating())
   {
     Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Calibrating");
   }
-  wait(2, sec);
+  wait(2, sec);*/
   Brain.Screen.print("Complete");
   Brain.Screen.clearScreen();
   imu.setHeading(0, degrees);

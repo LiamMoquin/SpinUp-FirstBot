@@ -106,14 +106,24 @@ int flywheelP()
   float fkP = .2;
 
   float error = targetVel - Flywheel.velocity(rpm)*6;
+  float velReq = ((targetVel + (error * fkP)) / 36) * 12;
+  printf("Target Velocity: %i\n", targetVel);
   while(true)
   {
-    error = targetVel - Flywheel.velocity(rpm)*6;
-    Flywheel.spin(fwd, (error * fkP) + targetVel/36, pct);
-    wait(5,msec);
     Brain.Screen.clearScreen();
+    error = targetVel - Flywheel.velocity(rpm)*6;
+    velReq = ((targetVel + (error * fkP)) / 36) * 12;
+    //quick math checking velReq math
+    //((3600 + (0)) / 36) * 12 = 100 * 12 = 1200
+    //((3000 + (0)) / 36) * 12 = 100 * 12 = 1000
+    //((3000 + (1000 * 0.2)) / 36) * 12 = ((3000 + 200) / 36) * 12 = (3200 / 36) * 12
+    printf("Velocity Request: %f\n", velReq);
+    Brain.Screen.setCursor(2, 1);
+    Brain.Screen.print(velReq);
+    Flywheel.spin(fwd, velReq, voltageUnits::mV);
     Brain.Screen.setCursor(1,1);
     Brain.Screen.print(Flywheel.velocity(rpm)*6);
+    wait(5,msec);
   }
   return 0;
 }
