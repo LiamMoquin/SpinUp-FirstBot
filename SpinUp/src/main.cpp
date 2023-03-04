@@ -267,7 +267,7 @@ void autonomous(void) {
 
   if(autonSwitch == 3)//pidTest
   {
-    setFly(3000);
+    setFly(3600);
 
     /*imu.setHeading(180, degrees);
     frontLeft.setStopping(brake);
