@@ -103,7 +103,7 @@ void setFly(int target){
 
 int flywheelP()
 {
-  float fkP = .2;
+  float fkP = 1;
 
   float error = targetVel - Flywheel.velocity(rpm)*6;
   float velReq = ((targetVel + (error * fkP)) / 36) * 12;
@@ -116,7 +116,7 @@ int flywheelP()
     //quick math checking velReq math
     //((3600 + (0)) / 36) * 12 = 100 * 12 = 1200
     //((3000 + (0)) / 36) * 12 = 100 * 12 = 1000
-    //((3000 + (1000 * 0.2)) / 36) * 12 = ((3000 + 200) / 36) * 12 = (3200 / 36) * 12
+    //((3000 + (1000 * 0.2)) / 36) * 12 = ((3000 + 200) / 36) * 12 = (3200 / 36) * 12 = (88.88) * 12
     printf("Velocity Request: %f\n", velReq);
     Brain.Screen.setCursor(2, 1);
     Brain.Screen.print(velReq);
