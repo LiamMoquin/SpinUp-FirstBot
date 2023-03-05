@@ -50,8 +50,11 @@ void expand(bool armed = false)
 
 void tempCheck()//warns if temperature is too high
 {
-  Brain.Screen.setCursor(10,3);
-  Brain.Screen.setPenColor(red);
+  //Brain.Screen.setCursor(10,3);
+  //Brain.Screen.setPenColor(red);
+  
+  Controller2.Screen.setCursor(2,1);
+  Controller2.Screen.print("MTR OVRHEAT: " );
   if(frontLeft.temperature(celsius) >= 45)
   {
     Brain.Screen.print("LEFT FRONT OVERHEAT!!!");

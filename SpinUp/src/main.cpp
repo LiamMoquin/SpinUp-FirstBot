@@ -44,20 +44,22 @@ competition Competition;
 /*  function is only called once after the V5 has been powered on and        */
 /*  not every time that the robot is disabled.                               */
 /*---------------------------------------------------------------------------*/
-int autonSwitch = 3;
-
+int autonSwitch;
+task FlywheelT = task(flywheelP);
 void pre_auton(void) {
+  
+  vex::task::suspend(FlywheelT);
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
   Controller2.Screen.clearScreen();
   OpticalSensor.setLightPower(200);
-  /*imu.calibrate();
+  imu.calibrate();
   while(imu.isCalibrating())
   {
     Brain.Screen.setCursor(3, 1);
     Brain.Screen.print("Calibrating");
   }
-  wait(2, sec);*/
+  wait(2, sec);
   Brain.Screen.print("Complete");
   Brain.Screen.clearScreen();
   imu.setHeading(0, degrees);
@@ -148,13 +150,14 @@ void rollerStop()
 }
 
 void autonomous(void) {
+  vex::task::resume(FlywheelT);
   Brain.Screen.clearScreen();
-  task FlywheelT = task(flywheelP);
+  //task FlywheelT = task(flywheelP);
 
   //left side auton
   if(autonSwitch == 0)
   {
-    Flywheel.spin(fwd, 12000*.5, voltageUnits::mV);
+    setFly(2900);
     driveTime(.2, 100);
     rollerSpin();
     wait(500, msec);
@@ -174,7 +177,7 @@ void autonomous(void) {
     driveTime(1, -75);
     frontLeft.spin(fwd, 50, percent);
     rearLeft.spin(fwd, 50, percent);
-    wait(425, msec);
+    wait(350, msec);
     frontLeft.stop();
     rearLeft.stop();
     wait(500, msec);
@@ -268,8 +271,7 @@ void autonomous(void) {
   if(autonSwitch == 3)//pidTest
   {
     setFly(3600);
-
-    /*imu.setHeading(180, degrees);
+    imu.setHeading(180, degrees);
     frontLeft.setStopping(brake);
     rearLeft.setStopping(brake);
     frontRight.setStopping(brake);
@@ -286,13 +288,13 @@ void autonomous(void) {
     driveTime(2.2, 50);
 
     turnPD(90+55);
-    wait(1, sec);
     shoot();
-    wait(3, sec);
+    wait(1000, msec);
     shoot();
-    wait(1,sec);
-    shoot();*/
-
+    turnPD(180+45);
+    expand(true);
+    driveTime(1.5, 50);
+    driveTime(.75, 40);
   }
 
   //driveStraighti(24, 10, 100, 0.2);
@@ -320,21 +322,26 @@ int flywheelState = 3600;
 void flywheelSlowA()
 {
   flywheelState = 0;
+  setFly(flywheelState);
 }
 void flywheelSlowB()
 {
-  flywheelState = 3600 * .8;
+  flywheelState = 3600 * .85;
+  setFly(flywheelState);
 }
 void flywheelSlowY()
 {
   flywheelState = 3600;
+  setFly(flywheelState);
 }
 
 void usercontrol(void) {
+  vex::task::resume(FlywheelT);
 
   // User control code here, inside the loop
 
   Intake.spin(fwd, 12000, voltageUnits::mV);
+  setFly(3600);
 
   Brain.resetTimer();
   Controller2.Screen.clearScreen();
@@ -368,6 +375,10 @@ void usercontrol(void) {
     {
       Intake.stop();
     }
+    if(Controller2.ButtonL2.pressing())
+    {
+      Intake.spin(reverse, 12000, voltageUnits::mV);
+    }
 
     Controller1.ButtonR2.pressed(shoot);//shoots disc when right bumper 2 is pressed
     //Controller1.ButtonDown.pressed(expand(endgame()));
@@ -381,8 +392,8 @@ void usercontrol(void) {
     }
     
     
-    Controller1.ButtonL1.pressed(rollerSpin);
-    Controller1.ButtonL2.pressed(rollerStop);
+    //Controller1.ButtonL1.pressed(rollerSpin);
+    //Controller1.ButtonL2.pressed(rollerStop);
 
 
     frontLeft.spin(fwd, (Controller1.Axis2.value() + Controller1.Axis1.value()), vex::velocityUnits::pct);
